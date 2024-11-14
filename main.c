@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adlopez- <adlopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 12:57:00 by adlopez-          #+#    #+#             */
-/*   Updated: 2024/11/13 23:37:56 by adlopez-         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:03:30 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,33 @@ int main(int argc, char **argv)
 		ft_error(0);
 	fd = open(argv[1], O_RDONLY);
 	if (ft_parse_map(fd) == 1)
+	{
 		printf("parse ok!");
+		//devuelve el mapa ok
+		
+		/* NO assets/armenistan.xpm
+		SO assets/pakistan.xpm
+		WE assets/turkmenistan.xpm
+		EA assets/uzbekistan.xpm */
+		//Devuelveme en NO la textura y asi sucesivamente en un char*
+		
+		/* estructura con:
+		char **map //por favor necesitamos el mapa quitandole los saltos de linea y cerrandolos en vez de \n que sea \0 gracias; 
+		char *texture = una por cada textura graxias;
+		el rgb tambien a poder ser que nos vega en un array de 3 int(pista usa atoi); */
+		
+	}
+		/* yo soy izaro y tengo que hacer que se levanten los muros y simular el 3d 
+		para ello necesito
+		cargar texturas en la mlx
+		cargar una imagen nueva, pintar la imgen del juego que se va a ver
+		calcular hacia donde esta mirando el jugador N S E W (la primera vez segun entras)
+		
+		ESTO EN BUCLE
+		/* la posicion del player, x y
+		camara, seno coseno y pos jugador.
+		Calcular los rayos */
+		*/
 		//data = ft_setup_data(argv[1]);
 	/*if (data)
 	{

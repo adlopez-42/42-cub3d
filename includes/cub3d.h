@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adlopez- <adlopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 12:58:08 by adlopez-          #+#    #+#             */
-/*   Updated: 2024/11/14 00:18:42 by adlopez-         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:04:07 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,53 @@
 
 // aqui pegas las que necesitas y todo llamado por t_data
 // y cuando las tengas hacemos la ft_setup_data
+//mlx
+typedef struct s_mlx
+{
+	void				*mlx;
+	void				*win;
+	void				*img;
+	void				*img_addr;
+	int					bits_per_pixel;
+	int					size_line;
+	int					endian;
+}						t_mlx;
+
+//pintar imagenes en el juego de lo que devuelve la mlx
+typedef struct s_image_info
+{
+	void				*image_charge;
+	char				*addres;
+	int					bpp;
+	int					line_s;
+	int					endian;
+	bool				created;
+}						t_image_info;
+
+typedef struct s_player_position
+{
+	
+
+}						t_player_position;
+
+typedef struct s_pos_player
+{
+	double				x;
+	double				y;
+}						t_pos;
+
+typedef struct s_cube_data
+{
+	char				*north_texture;
+	char				*south_texture;
+	char				*west_texture;
+	char				*east_texture;
+	int					color_texture[3];
+	char				**map;
+	t_player_position	*player_position;
+	t_mlx				mlx;
+	t_image_info		*textures;
+}						t_cube_data;
 
 // functions
 
