@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 12:58:08 by adlopez-          #+#    #+#             */
-/*   Updated: 2024/11/14 14:04:07 by izperez          ###   ########.fr       */
+/*   Updated: 2024/11/16 12:58:35 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <stdbool.h>
+# include "../mlx/mlx.h"
+
+//hook linux
+# define A 97
+# define D 100
+# define W 119
+# define S 115
+# define LEFT 65361  // linux
+# define RIGHT 65363 // linux
+# define UP 65362    // linux
+# define DOWN 65364  // linux
+# define ESC 65307   // linux
 
 // structs
 
@@ -28,8 +41,8 @@
 //mlx
 typedef struct s_mlx
 {
-	void				*mlx;
-	void				*win;
+	void				*mlx_ptr;
+	void				*win_ptr;
 	void				*img;
 	void				*img_addr;
 	int					bits_per_pixel;
@@ -38,7 +51,7 @@ typedef struct s_mlx
 }						t_mlx;
 
 //pintar imagenes en el juego de lo que devuelve la mlx
-typedef struct s_image_info
+typedef struct s_info
 {
 	void				*image_charge;
 	char				*addres;
@@ -46,7 +59,7 @@ typedef struct s_image_info
 	int					line_s;
 	int					endian;
 	bool				created;
-}						t_image_info;
+}						t_info;
 
 typedef struct s_player_position
 {
@@ -60,7 +73,7 @@ typedef struct s_pos_player
 	double				y;
 }						t_pos;
 
-typedef struct s_cube_data
+typedef struct s_data
 {
 	char				*north_texture;
 	char				*south_texture;
@@ -70,8 +83,8 @@ typedef struct s_cube_data
 	char				**map;
 	t_player_position	*player_position;
 	t_mlx				mlx;
-	t_image_info		*textures;
-}						t_cube_data;
+	t_info				*textures;
+}						t_data;
 
 // functions
 
@@ -103,5 +116,7 @@ int	                ft_map_top(char **map);
 int	                ft_map_bot(char **map);
 size_t              ft_strlen(const char *s);
 void	            *ft_calloc(size_t count, size_t size);
+
+void				init_data(t_data *data);
 
 #endif
