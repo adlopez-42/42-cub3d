@@ -6,7 +6,7 @@
 #    By: izperez <izperez@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 23:29:13 by adlopez-          #+#    #+#              #
-#    Updated: 2024/11/16 12:49:39 by izperez          ###   ########.fr        #
+#    Updated: 2024/11/25 13:12:00 by izperez          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SRC_FILES = main \
 			04_textures \
 			05_parse_utils \
 			06_parse_utils_2 \
-			07_init_struct \
+			07_init_setup \
+			08_setup_utils \
 			utils/00_split \
 			utils/01_split_utils \
 			

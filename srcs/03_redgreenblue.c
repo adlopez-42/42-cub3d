@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   03_redgreenblue.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adlopez- <adlopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 13:29:15 by adlopez-          #+#    #+#             */
-/*   Updated: 2024/11/13 23:47:05 by adlopez-         ###   ########.fr       */
+/*   Updated: 2024/11/25 13:34:23 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_rgb_check(char **map)
 	ciel_pos = ft_cieling_pos(map);
 	if (ft_rgb_check_single(ft_string_streatment(map[floor_pos])) == 0)
 		return (0);
-    if (ft_rgb_check_single(ft_string_streatment(map[ciel_pos])) == 0)
+	if (ft_rgb_check_single(ft_string_streatment(map[ciel_pos])) == 0)
 		return (0);
 	return (1);
 }
@@ -52,6 +52,26 @@ int	ft_rgb_check_single(char *map)
 	}
 	free(map);
 	return (1);
+}
+
+int	ft_rgb_data_2(char *map)
+{
+	int		idx;
+	int		idy;
+	char	str[420];
+
+	idx = 0;
+	idy = 0;
+	while (map[idx] != ',')
+		idx++;
+	idx++;
+	while (map[idx] != ',')
+		idx++;
+	idx++;
+	while (map[idx] != '\0')
+		str[idy++] = map[idx++];
+	str[idy] = '\0';
+	return (atoi(str));
 }
 
 int	ft_rgb_data(char *map, int flag)

@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 23:52:14 by adlopez-          #+#    #+#             */
-/*   Updated: 2024/11/16 12:47:54 by izperez          ###   ########.fr       */
+/*   Updated: 2024/11/25 13:15:57 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	*ft_calloc(size_t count, size_t size)
 	return (temp);
 }
 
-size_t  ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
-    int len;
+	int len;
 
-    len = 0;
-    while (s[len])
-        len++;
-    return (len);
+	len = 0;
+	while (s[len])
+		len++;
+	return (len);
 }
