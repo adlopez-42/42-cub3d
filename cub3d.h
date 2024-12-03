@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/29 13:40:46 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/02 13:54:45 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include "mlx/mlx.h"
+# include <math.h>
 
 // macros
 
@@ -36,6 +37,7 @@
 # define ESC 65307
 
 # define TILE_SIZE 100
+# define PI 3.14159265359
 
 //colors
 # define GRIS 0x808080
@@ -82,9 +84,9 @@ typedef struct s_asset
 
 typedef struct s_playerpos
 {
-	int				x;
-	int				y;
-	int				dir;
+	float			x;
+	float			y;
+	float			dir;
 }					t_pos;
 
 typedef struct s_map
@@ -124,8 +126,8 @@ typedef struct s_checks
 // functions
 
 //utils
-static int			count_words(const char *str, char c);
-static char			*word_dup(const char *str, int start, int finish);
+//static int			count_words(const char *str, char c);
+//static char			*word_dup(const char *str, int start, int finish);
 char				**ft_split(char const *s, char c);
 int					ft_strlen(const char *s);
 char				*ft_strdup(char *str);
@@ -138,7 +140,7 @@ int					ft_rgbreturn_2(char *input);
 int					ft_strncmp(const char *str, const char *str2, size_t c);
 int					ft_texture_format(char *texture);
 int					ft_repeated_textures(t_checks *checker);
-int					ft_posdir(char **map);
+float				ft_posdir(char **map);
 
 
 //00_error.c
@@ -182,5 +184,10 @@ int					ft_close(int keycode, t_data *data);
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void				draw_square(t_data *data, char c, int d_x, int d_y);
 void				draw_grid(t_data *data);
+void				draw_player(t_data *data);
+void				draw_pito(t_data *data, float desf, int lenght);
+void				draw_line(t_data *data, float x, float y, float angle, int length);
 
+//07_hooks.c
+int					ft_hooks( int keycode, t_data *data);
 #endif

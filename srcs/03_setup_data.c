@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:55:28 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/29 13:14:54 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/02 11:13:38 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_pos	*ft_playerpos(char **map)
 		{
 			if (map[idx][idy] == 'N' || map[idx][idy] == 'S' || map[idx][idy] == 'W' || map[idx][idy] == 'E')
 			{
-				position->x = idx + 1;
-				position->y = idy + 1;
+				position->x = idx + 0.5;
+				position->y = idy + 0.5;
 			}
 			idy++;
 		}

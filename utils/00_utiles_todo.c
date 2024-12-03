@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   00_utiles_todo.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adrian <adrian@student.42.fr>              +#+  +:+       +#+        */
+/*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 16:23:27 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/26 20:32:14 by adrian           ###   ########.fr       */
+/*   Updated: 2024/12/02 12:52:22 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,11 +251,11 @@ int	ft_repeated_textures(t_checks *checker)
 	return (1);
 }
 
-int	ft_posdir(char **map)
+float	ft_posdir(char **map)
 {
-	int	idx;
-	int	idy;
-	int	res;
+	int		idx;
+	int		idy;
+	float	res;
 
 	idx = 0;
 	idy = 0;
@@ -264,13 +264,13 @@ int	ft_posdir(char **map)
 		while (map[idx][idy])
 		{
 			if (map[idx][idy] == 'N')
-				res = 0;
+				res = PI / 2;
 			if (map[idx][idy] == 'S')
-				res = 1;
+				res = 3 * (PI / 2);
 			if (map[idx][idy] == 'W')
-				res = 2;
+				res = PI;
 			if (map[idx][idy] == 'E')
-				res = 3;
+				res = 2 * PI;
 			idy++;;
 		}
 		idy = 0;

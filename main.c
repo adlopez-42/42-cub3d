@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:38 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/29 12:43:20 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/02 13:33:07 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,16 @@
 
 void	ft_cub3d(t_data *data)
 {
+	//draw_grid(data);
 	while (1)
 	{
+		//(1L << 0)
 		draw_grid(data);
-		mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
-		printf("Ha pintado el puntito\n");
+		mlx_hook(data->mlx->win, 2, 3, *ft_hooks, data);
 		mlx_hook(data->mlx->win, 17, 0, *ft_close, data);
 		mlx_key_hook(data->mlx->win, *ft_close, data);
 		mlx_loop(data->mlx->mlx);
 	}
-}
-
-int	main(int argc, char **argv)
-{
-	t_data		*data;
-	t_checks	*checker;
-	int			fd;
-
-	if (argc == 1 || ft_cub(argv[1]) == 0)
-		ft_error(0);
-	fd = open(argv[1], O_RDONLY);
-	checker = ft_setup_checker(fd);
-	// ft_print_checker(checker)
-	if (ft_parse(checker) == 1)
-		data = ft_setup_data(checker);
-	ft_free_checker(checker);
-	ft_print_data(data);
-	if (data)
-	{
-		ft_cub3d(data);
-		ft_free_data(data);
-	}
-	return (1);
 }
 
 void	ft_print_data(t_data *data)
@@ -64,9 +42,9 @@ void	ft_print_data(t_data *data)
 	printf("assets -> EA %s\n", data->asset->east_texture);
 	printf("Floor rgbs %i, %i, %i\n", data->asset->floor_rgb[0], data->asset->floor_rgb[1], data->asset->floor_rgb[2]);
 	printf("Cieling rgbs %i, %i, %i\n", data->asset->cieling_rgb[0], data->asset->cieling_rgb[1], data->asset->cieling_rgb[2]);
-	printf("Player pos x -> %i\n", data->playerpos->x);
-	printf("Player pos y -> %i\n", data->playerpos->y);
-	printf("Player orientation -> %i (0 no, 1 so, 2 we, 3 ea)\n", data->playerpos->dir);
+	printf("Player pos x -> %f\n", data->playerpos->x);
+	printf("Player pos y -> %f\n", data->playerpos->y);
+	printf("Player orientation -> %f (0 no, 1 so, 2 we, 3 ea)\n", data->playerpos->dir);
 }
 
 void	ft_print_checker(t_checks *checker)
@@ -79,4 +57,27 @@ void	ft_print_checker(t_checks *checker)
 	printf("cieling rgbs -> %i, %i, %i\n", checker->c_red, checker->c_green, checker->c_blue);
 	printf("map[0] %s\nmap[1] %s\nmap[2] %s\n...\n", checker->map[0], checker->map[1], checker->map[2]);
 	return ;
+}
+
+int	main(int argc, char **argv)
+{
+	t_data		*data;
+	t_checks	*checker;
+	int			fd;
+
+	if (argc == 1 || ft_cub(argv[1]) == 0)
+		ft_error(0);
+	fd = open(argv[1], O_RDONLY);
+	checker = ft_setup_checker(fd);
+	// ft_print_checker(checker)
+	if (ft_parse(checker) == 1)
+		data = ft_setup_data(checker);
+	//ft_free_checker(checker);
+	ft_print_data(data);
+	if (data)
+	{
+		ft_cub3d(data);
+		ft_free_data(data);
+	}
+	return (1);
 }

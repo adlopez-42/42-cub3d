@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:59:07 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/29 13:08:57 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/02 11:43:22 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_map	*ft_clean_map(char **checkermap)
 {
 	t_map	*newmap;
-
 	int		idx;
 	char	**newgrid;
 	int		max;
@@ -38,6 +37,7 @@ t_map	*ft_clean_map(char **checkermap)
 	newgrid[idx] = NULL;
 
 	newmap->grid = newgrid;
+	printf("El idx es esto del height: %d\n", idx);
 	newmap->height = idx;
 	newmap->width = max;
 	return (newmap);

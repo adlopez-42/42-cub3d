@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/11/29 12:58:15 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/02 14:04:12 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	draw_square(t_data *data, char c, int d_x, int d_y)
 	else if (c == '0')
 		color = BLANCO; //blanco para el suelo
 	else if (c == 'N' || c == 'S' || c == 'E' || c == 'O')
-		color = ROJO; //rojo jugador
+		color = BLANCO; //rojo jugador
 	else
 		color = NEGRO; //negro
 	y = 0;
@@ -76,7 +76,7 @@ void	draw_square(t_data *data, char c, int d_x, int d_y)
 		//printf("\n");
 		y++;
 	}
-	printf("%i %i\n", x, y);
+	//printf("%i %i\n", x, y);
 }
 
 void	draw_grid(t_data *data)
@@ -90,8 +90,78 @@ void	draw_grid(t_data *data)
 		x = 0;
 		while(x < data->map->width)
 		{
-			//printf("%c", data->map->grid[y][x]);
 			draw_square(data, data->map->grid[y][x], x, y);
+			x++;
+		}
+		y++;
+	}
+	draw_player(data);
+	draw_pito(data, data->playerpos->dir, 10);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
+}
+
+void	draw_line(t_data *data, float x, float y, float angle, int length)
+{
+	float x_end;
+	float y_end;
+	float step;
+	int i;
+
+	x_end = x + length * cos(angle);
+	y_end = y + length * sin(angle);
+	step = 1.0 / length; // Ajusta según tu resolución deseada
+
+	printf("x_end[%f] y y_end[%f]\n", x_end, y_end);
+	for (i = 0; i <= length; i++)
+	{
+		float t = i * step; // Proporción del camino recorrido
+		float x_current = x + t * (x_end - x);
+		float y_current = y + t * (y_end - y);
+		printf("x_current[%f] y y_current[%f]\n", x_current, y_current);
+		my_mlx_pixel_put(data, (int)x_current, (int)y_current, ROJO); // Color blanco
+	}
+}
+
+
+void	draw_pito(t_data *data, float desf, int lenght)
+{
+	float pos[2];
+	float angle;
+	(void)desf;
+	(void)lenght;
+		
+	pos[0] = data->playerpos->x;
+	pos[1] = data->playerpos->y;
+	angle = data->playerpos->dir;
+
+	printf("pos_x[%f] y pos_y[%f]\n", pos[0], pos[1]);
+	draw_line(data, pos[0], pos[1], angle, 10);
+	
+
+}
+
+void	draw_player(t_data *data)
+{
+	int	x;
+	int	y;
+	int	p_x;
+	int	p_y;
+
+	p_x = data->playerpos->x * TILE_SIZE;
+	p_y = data->playerpos->y * TILE_SIZE;
+
+	y = 0;
+
+	while (y < data->mlx->height_window)
+	{
+		x = 0;
+		while (x < data->mlx->width_window)
+		{
+			// Comprueba si (x, y) está dentro de un círculo de 10 píxeles alrededor de (p_y, p_x)
+			if (sqrt((x - p_y) * (x - p_y) + (y - p_x) * (y - p_x)) <= 10)
+			{
+				my_mlx_pixel_put(data, x, y, ROJO);
+			}
 			x++;
 		}
 		y++;
