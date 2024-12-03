@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/03 13:17:45 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:58:41 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,17 @@ void	draw_grid(t_data *data)
 	draw_player(data);
 	float	start_des;
 	float	end_des;
+	int		i = 0;
 	start_des = 30 * (PI / 180.0) + (PI / 2);
 	end_des = -30 * (PI / 180.0) + (PI / 2);
+	//este bucle se tiene que repetir por todos los pixeles horizontales haya.
 	while (start_des >= end_des)
 	{
 		draw_pito(data, start_des, 3000);
-		start_des -= 0.005;
+		start_des -= 0.1;
+		i++;
 	}
-		
+	printf("Cuantas veces entro[%d]\n", i); //i == pixeles horizontales de la ventana
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 }
 
@@ -115,24 +118,27 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float di
 	// Calcular las coordenadas del final de la línea
 	float x_end = x_start + distance * cos(angle);
 	float y_end = y_start + distance * sin(angle);
+	int	new_color = color;
 
 	// Dibuja la línea pixel a pixel
 	int steps = (int)distance; // Número de pasos para recorrer la línea
 	// float x = x_start;
 	// float y = y_start;
 
-	for (int i = 0; i < steps; i++)
+	int	i = 0;
+	while (i++ < steps)
 	{
 		// Calculamos la posición actual de la línea usando la interpolación lineal
 		float t = (float)i / (float)steps;  // Proporción de la distancia recorrida
 		int x_current = (int)(x_start + t * (x_end - x_start));
 		int y_current = (int)(y_start + t * (y_end - y_start));
-		//printf("x_current[%d] y y_current[%d]\n", x_current, y_current);
 		if (data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] == '1')
 			break ;
 		else
-			my_mlx_pixel_put(data, y_current, x_current, color);
+			my_mlx_pixel_put(data, y_current, x_current, new_color);
 	}
+	printf("distancia %d\n", i);
+	
 }
 
 
