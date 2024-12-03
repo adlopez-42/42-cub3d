@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 12:29:39 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/02 13:40:17 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/03 13:17:40 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,88 @@
 
 static void	key_press_aux(t_data *data, double move_x, double move_y, int mode)
 {
-	t_pos		*player;
-	float		tmp_x;
-	float		tmp_y;
-	tmp_x = 0;
-	tmp_y = 0;
+	t_pos *player;
+	float tmp_x;
+	float tmp_y;
+
 	player = data->playerpos;
-	if (mode == 1)
+
+	// Dependiendo del modo (hacia adelante o hacia atrás), ajustamos las coordenadas
+	if (mode == 1) // Movimiento hacia atrás
 	{
 		tmp_x = player->x - (move_x * 0.1);
 		tmp_y = player->y - (move_y * 0.1);
 	}
-	else
+	else // Movimiento hacia adelante
 	{
 		tmp_x = player->x + (move_x * 0.1);
 		tmp_y = player->y + (move_y * 0.1);
 	}
-	if (data->map->grid[(int)(tmp_x)][(int)(tmp_y)] != '1' && 	data->map->grid[(int)tmp_x][(int)tmp_y] != ' ')
+
+	// Validación de colisión con muros (1) o fuera de los límites (espacio vacío ' ')
+	if (data->map->grid[(int)(tmp_x)][(int)(tmp_y)] != '1' && data->map->grid[(int)tmp_x][(int)tmp_y] != ' ')
 	{
 		player->x = tmp_x;
 		player->y = tmp_y;
 	}
-	data->playerpos = player;
-	//printf("tmpx[%f] y tmpy[%f]\n", data->playerpos->x, data->playerpos->y);
+
+	data->playerpos = player; // Actualizamos la posición del jugador
 }
 
-int	ft_hooks( int keycode, t_data *data)
+int	ft_hooks(int keycode, t_data *data)
 {
-	if (keycode == A)
-		key_press_aux(data, cos(data->playerpos->dir), sin(data->playerpos->dir), 1);
-	else if (keycode == D)
-		key_press_aux(data, cos(data->playerpos->dir), sin(data->playerpos->dir), 2);
-	else if (keycode == W)
-		key_press_aux(data, cos(data->playerpos->dir + PI / 2), sin(data->playerpos->dir + PI / 2), 2);
-	else if (keycode == S)
-		key_press_aux(data, cos(data->playerpos->dir + PI / 2), sin(data->playerpos->dir + PI / 2), 1);
+	double move_x, move_y;
+
+	// Cálculo de la dirección para cada tecla
+	if (keycode == S) // Movimiento hacia la izquierda (perpendicular a la dirección)
+	{
+		move_x = cos(data->playerpos->dir + PI / 2); // 90 grados a la izquierda
+		move_y = sin(data->playerpos->dir + PI / 2);
+		key_press_aux(data, move_x, move_y, 1); // Mover a la izquierda
+	}
+	else if (keycode == W) // Movimiento hacia la derecha (perpendicular a la dirección)
+	{
+		move_x = cos(data->playerpos->dir - PI / 2); // 90 grados a la derecha
+		move_y = sin(data->playerpos->dir - PI / 2);
+		key_press_aux(data, move_x, move_y, 1); // Mover a la derecha
+	}
+	else if (keycode == D) // Movimiento hacia adelante (en la dirección actual)
+	{
+		move_x = cos(data->playerpos->dir); // Dirección hacia adelante
+		move_y = sin(data->playerpos->dir);
+		key_press_aux(data, move_x, move_y, 2); // Mover hacia adelante
+	}
+	else if (keycode == A) // Movimiento hacia atrás (en la dirección opuesta)
+	{
+		move_x = cos(data->playerpos->dir); // Dirección hacia atrás
+		move_y = sin(data->playerpos->dir);
+		key_press_aux(data, move_x, move_y, 1); // Mover hacia atrás
+	}
 	else
-		printf("tamos en el else\n");
-	mlx_clear_window(data->mlx->mlx, data->mlx->win);
-	draw_grid(data);
+	{
+		//printf("Tecla no mapeada\n");
+		ft_rotation(keycode, data);
+	}
+	mlx_clear_window(data->mlx->mlx, data->mlx->win); // Limpiar la ventana
+	draw_grid(data); // Dibujar la rejilla
+	return (keycode);
+}
+
+
+int	ft_rotation(int keycode, t_data *data)
+{
+	float	angle;
+
+	angle = data->playerpos->dir;
+	if (keycode == RIGHT)
+		angle -= 0.05;
+	else if (keycode == LEFT)
+		angle += 0.05;
+	else
+		printf("error rotation %i\n", keycode);
+		
+	data->playerpos->dir = angle;
+	mlx_clear_window(data->mlx->mlx, data->mlx->win); // Limpiar la ventana
+	draw_grid(data); // Dibujar la rejilla
 	return (keycode);
 }

@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/02 13:54:45 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/03 12:46:48 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,11 @@ void				draw_square(t_data *data, char c, int d_x, int d_y);
 void				draw_grid(t_data *data);
 void				draw_player(t_data *data);
 void				draw_pito(t_data *data, float desf, int lenght);
-void				draw_line(t_data *data, float x, float y, float angle, int length);
+// void				draw_line(t_data *data, float x, float y, float angle, int length);
+void				draw_line(t_data *data, float x_start, float y_start, float angle, float distance, int color);
 
 //07_hooks.c
 int					ft_hooks( int keycode, t_data *data);
+int					ft_rotation(int keycode, t_data *data);
+
 #endif
