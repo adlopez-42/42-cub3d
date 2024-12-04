@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/03 13:58:41 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/04 13:14:17 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,12 @@ void	draw_grid(t_data *data)
 	while (start_des >= end_des)
 	{
 		draw_pito(data, start_des, 3000);
-		start_des -= 0.1;
+		start_des -= 0.5;
 		i++;
 	}
 	printf("Cuantas veces entro[%d]\n", i); //i == pixeles horizontales de la ventana
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 }
-
 
 void draw_line(t_data *data, float x_start, float y_start, float angle, float distance, int color)
 {
@@ -126,21 +125,23 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float di
 	// float y = y_start;
 
 	int	i = 0;
+	float t;  // Proporción de la distancia recorrida
+	int x_current;
+	int y_current;
 	while (i++ < steps)
 	{
-		// Calculamos la posición actual de la línea usando la interpolación lineal
-		float t = (float)i / (float)steps;  // Proporción de la distancia recorrida
-		int x_current = (int)(x_start + t * (x_end - x_start));
-		int y_current = (int)(y_start + t * (y_end - y_start));
+		t = (float)i / (float)steps;
+		x_current = (int)(x_start + t * (x_end - x_start));
+		y_current = (int)(y_start + t * (y_end - y_start));
 		if (data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] == '1')
-			break ;
+			break;
 		else
 			my_mlx_pixel_put(data, y_current, x_current, new_color);
 	}
-	printf("distancia %d\n", i);
-	
+	wall_side(data, x_current, y_current, angle);
+	printf("x_current[%i] y_current[%i]\n", x_current, y_current);
+	//printf("distancia %d\n", i);
 }
-
 
 void	draw_pito(t_data *data, float desf, int lenght)
 {

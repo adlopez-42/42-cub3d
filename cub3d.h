@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/03 12:46:48 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/04 11:45:36 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,5 +192,9 @@ void				draw_line(t_data *data, float x_start, float y_start, float angle, float
 //07_hooks.c
 int					ft_hooks( int keycode, t_data *data);
 int					ft_rotation(int keycode, t_data *data);
+
+//08_3d.c
+void				wall_side(t_data *data, int x, int y, float angle);
+
 
 #endif

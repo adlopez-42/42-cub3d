@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 12:29:39 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/03 13:17:40 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/04 12:05:23 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,16 @@ static void	key_press_aux(t_data *data, double move_x, double move_y, int mode)
 		player->y = tmp_y;
 	}
 
-	data->playerpos = player; // Actualizamos la posición del jugador
+	data->playerpos = player;
 }
 
 int	ft_hooks(int keycode, t_data *data)
 {
 	double move_x, move_y;
 
+	system("clear");
 	// Cálculo de la dirección para cada tecla
-	if (keycode == S) // Movimiento hacia la izquierda (perpendicular a la dirección)
+	if (keycode == S)
 	{
 		move_x = cos(data->playerpos->dir + PI / 2); // 90 grados a la izquierda
 		move_y = sin(data->playerpos->dir + PI / 2);
