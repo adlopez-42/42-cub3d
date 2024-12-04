@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/04 11:45:36 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/04 14:22:31 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@
 # define DOWN 65364
 # define ESC 65307
 
+# define WALL_TOP 0
+# define WALL_BOTTOM 1
+# define WALL_RIGHT 2
+# define WALL_LEFT 3
+
 # define TILE_SIZE 100
 # define PI 3.14159265359
 
@@ -44,6 +49,10 @@
 # define BLANCO 0xFFFFFF
 # define NEGRO 0x000000
 # define ROJO 0xff0000
+# define ROSA 0xB0149B
+# define MORADO 0x7306BC
+# define VERDE 0x099F1D
+# define AZUL 0X146BD0
 
 
 
@@ -195,6 +204,8 @@ int					ft_rotation(int keycode, t_data *data);
 
 //08_3d.c
 void				wall_side(t_data *data, int x, int y, float angle);
+void				ft_horizonte(int dist_ray, int color, t_data *data);
+
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:38 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/03 13:08:57 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/04 14:27:27 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_cub3d(t_data *data)
 	}
 }
 
-void	ft_print_data(t_data *data)
+/* void	ft_print_data(t_data *data)
 {
 	int	idx = 0;
 	while (data->map->grid[idx])
@@ -45,9 +45,9 @@ void	ft_print_data(t_data *data)
 	printf("Player pos x -> %f\n", data->playerpos->x);
 	printf("Player pos y -> %f\n", data->playerpos->y);
 	printf("Player orientation -> %f (0 no, 1 so, 2 we, 3 ea)\n", data->playerpos->dir);
-}
+} */
 
-void	ft_print_checker(t_checks *checker)
+/* void	ft_print_checker(t_checks *checker)
 {
 	printf("north texture -> %s\n", checker->north_texture);
 	printf("south texture -> %s\n", checker->south_texture);
@@ -57,7 +57,7 @@ void	ft_print_checker(t_checks *checker)
 	printf("cieling rgbs -> %i, %i, %i\n", checker->c_red, checker->c_green, checker->c_blue);
 	printf("map[0] %s\nmap[1] %s\nmap[2] %s\n...\n", checker->map[0], checker->map[1], checker->map[2]);
 	return ;
-}
+} */
 
 int	main(int argc, char **argv)
 {
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 	if (ft_parse(checker) == 1)
 		data = ft_setup_data(checker);
 	//ft_free_checker(checker);
-	ft_print_data(data);
+	//ft_print_data(data);
 	if (data)
 	{
 		ft_cub3d(data);

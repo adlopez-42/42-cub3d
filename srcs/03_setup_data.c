@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:55:28 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/02 11:13:38 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/04 13:51:53 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ t_mlx	*ft_mlx_init(t_map *map)
 
 	new = (t_mlx *)malloc(sizeof(t_mlx));
 	new->mlx = mlx_init();
-	new->win = mlx_new_window(new->mlx, map->width * 100, map->height * 100, "cubed");
+	new->win = mlx_new_window(new->mlx, 3491, 1964, "cub3d no payo");
+	// new->win = mlx_new_window(new->mlx, map->width * 100, map->height * 100, "cubed");
 	//new->bit_per_pixel = 0;
 	//new->endian = 0;
 	//new->size_line = 0;
