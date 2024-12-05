@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/04 14:29:36 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:25:08 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ void	draw_square(t_data *data, char c, int d_x, int d_y)
 	//printf("%i %i\n", x, y);
 }
 
-void	draw_grid(t_data *data)
+void	calculate_fov(t_data *data)
 {
-	int	x;
+/* 	int	x;
 	int	y;
 
 	y = 0;
@@ -95,7 +95,7 @@ void	draw_grid(t_data *data)
 		}
 		y++;
 	}
-	draw_player(data);
+	draw_player(data); */
 	float	start_des;
 	float	end_des;
 	int		i = 0;
@@ -103,30 +103,32 @@ void	draw_grid(t_data *data)
 	//Mirar el desfase que no esta bien calculado
 	start_des = 30 * (PI / 180.0) + (PI / 2); //Ajustar bien el desfase
 	end_des = -30 * (PI / 180.0) + (PI / 2);
+
+	
 	//este bucle se tiene que repetir por todos los pixeles horizontales haya.
 	while (start_des >= end_des)
 	{
-		draw_pito(data, start_des, 3000);
-		//start_des -= 0.0003;
-		start_des -= 0.3;
+		prepare_rays(data, start_des, 3000);
+		start_des -= 0.0003;
+		//start_des -= 0.3;
 		i++;
 	}
-	//printf("Cuantas veces entro[%d]\n", i); //i == pixeles horizontales de la ventana
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
+	
+	//printf("Cuantas veces entro[%d]\n", i); //i == pixeles horizontales de la ventana
 }
 
-void draw_line(t_data *data, float x_start, float y_start, float angle, float dist_ray, int color)
+void draw_line(t_data *data, float x_start, float y_start, float angle, float steps)
 {
 	// Calcular las coordenadas del final de la línea
-	float x_end = x_start + dist_ray * cos(angle);
-	float y_end = y_start + dist_ray * sin(angle);
-	int	new_color = color;
+	float x_end = x_start + steps * cos(angle);
+	float y_end = y_start + steps * sin(angle);
 
 	// Dibuja la línea pixel a pixel
-	int steps = (int)dist_ray; // Número de pasos para recorrer la línea
 	// float x = x_start;
 	// float y = y_start;
-
+	
+	int	color = 0;
 	int	i = 0;
 	float t;  // Proporción de la distancia recorrida
 	int x_current;
@@ -139,16 +141,15 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float di
 		y_current = (int)(y_start + t * (y_end - y_start));
 		if (data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] == '1')
 			break;
-		else
-			my_mlx_pixel_put(data, y_current, x_current, new_color);
 	}
 	dist_wall = 5000 / i;
-	//wall_side(data, x_current, y_current, angle);
+	
+	color = wall_side(x_current, y_current);
+	draw_colum(data, color, dist_wall);
 	//printf("distancia %d\n", dist_wall);
-	ft_horizonte(dist_wall, 0, data);
 }
 
-void	draw_pito(t_data *data, float desf, int lenght)
+void	prepare_rays(t_data *data, float desf, int lenght)
 {
 	float pos_x;
 	float pos_y;
@@ -159,7 +160,7 @@ void	draw_pito(t_data *data, float desf, int lenght)
 	angle = data->playerpos->dir + desf;
 
 	//printf("pos_x[%f] y pos_y[%f] angle[%f]\n", pos_x, pos_y, angle);
-	draw_line(data, pos_x, pos_y, angle, lenght, ROJO);
+	draw_line(data, pos_x, pos_y, angle, lenght);
 	//mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 
 }
@@ -191,21 +192,22 @@ void	draw_player(t_data *data)
 	}
 }
 
-void	wall_side(t_data *data, int x, int y, float angle)
+int	wall_side(int x, int y)
 {
-	(void)data;
-	(void)angle;
-	
+	int color;
+
+	color = 0;
 	if (((((x % TILE_SIZE) == 0) || (( x + 1 ) % TILE_SIZE) == 0)) && ((((y % TILE_SIZE) == 0) || (( y + 1 ) % TILE_SIZE) == 0)))
-		printf("Ha chocado en una esquina\n");
+		color = NEGRO;
 	else if ((y % TILE_SIZE) == 0)
-		printf("Ha chocado en una vertical derecha\n");
+		color = ROSA;
 	else if ((x % TILE_SIZE) == 0)
-		printf("Ha chocado en  una horizontal abajo\n");
+		color = ROSA;
 	else if (((x + 1) % (TILE_SIZE)) == 0)
-		printf("Ha chocado en  una horizontal arriba\n");
+		color = AZUL;
 	else if (((y + 1) % (TILE_SIZE)) == 0)
-		printf("Ha chocado en una vertical izquierda\n");
+		color = MORADO;
 	else
 		printf("error\n");
+	return (color);
 }

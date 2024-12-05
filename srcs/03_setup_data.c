@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:55:28 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/04 13:51:53 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/05 12:11:29 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,17 @@ t_mlx	*ft_mlx_init(t_map *map)
 {
 	t_mlx	*new;
 
+	(void)map;
 	new = (t_mlx *)malloc(sizeof(t_mlx));
 	new->mlx = mlx_init();
 	new->win = mlx_new_window(new->mlx, 3491, 1964, "cub3d no payo");
 	// new->win = mlx_new_window(new->mlx, map->width * 100, map->height * 100, "cubed");
-	//new->bit_per_pixel = 0;
-	//new->endian = 0;
-	//new->size_line = 0;
-	new->img =  mlx_new_image(new->mlx, map->width * 100, map->height * 100);
+	new->img =  mlx_new_image(new->mlx, 3491, 1964);
 	if (new->img == NULL)
 		printf("la img ta null\n");
 	new->img_addr = mlx_get_data_addr(new->img, &new->bit_per_pixel, &new->size_line, &new->endian);
-	new->width_window = map->width * 100;
-	new->height_window = map->height * 100;
+	new->width_window = 3491;
+	new->height_window = 1964;
 	return (new);
 }
 

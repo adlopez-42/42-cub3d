@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 12:29:39 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/04 13:41:10 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:28:38 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_hooks(int keycode, t_data *data)
 {
 	double move_x, move_y;
 
-	system("clear");
+	//system("clear");
 	// Cálculo de la dirección para cada tecla
 	if (keycode == S)
 	{
@@ -73,12 +73,10 @@ int	ft_hooks(int keycode, t_data *data)
 		key_press_aux(data, move_x, move_y, 1); // Mover hacia atrás
 	}
 	else
-	{
-		//printf("Tecla no mapeada\n");
 		ft_rotation(keycode, data);
-	}
-	mlx_clear_window(data->mlx->mlx, data->mlx->win); // Limpiar la ventana
-	draw_grid(data); // Dibujar la rejilla
+	
+	ft_drawcf(data);
+	calculate_fov(data); // Dibujar la rejilla
 	return (keycode);
 }
 
@@ -86,7 +84,6 @@ int	ft_hooks(int keycode, t_data *data)
 int	ft_rotation(int keycode, t_data *data)
 {
 	float	angle;
-
 	angle = data->playerpos->dir;
 	if (keycode == RIGHT)
 		angle -= 0.05;
@@ -96,7 +93,5 @@ int	ft_rotation(int keycode, t_data *data)
 		printf("error rotation %i\n", keycode);
 		
 	data->playerpos->dir = angle;
-	mlx_clear_window(data->mlx->mlx, data->mlx->win); // Limpiar la ventana
-	draw_grid(data); // Dibujar la rejilla
 	return (keycode);
 }

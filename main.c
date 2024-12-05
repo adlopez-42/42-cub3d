@@ -6,24 +6,29 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:38 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/04 14:27:27 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/05 13:21:20 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	load_image(t_data *data)
+{
+	//mlx_clear_window(data->mlx->mlx, data->mlx->win);
+	ft_drawcf(data);
+	calculate_fov(data);
+	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
+}
+
+
 void	ft_cub3d(t_data *data)
 {
-	//draw_grid(data);
-	while (1)
-	{
-		//(1L << 0)
-		draw_grid(data);
-		mlx_hook(data->mlx->win, 2, 3, *ft_hooks, data);
-		mlx_hook(data->mlx->win, 17, 0, *ft_close, data);
-		mlx_key_hook(data->mlx->win, *ft_close, data);
-		mlx_loop(data->mlx->mlx);
-	}
+	load_image(data);
+	mlx_hook(data->mlx->win, 2, 3, *ft_hooks, data);
+	mlx_hook(data->mlx->win, 17, 0, *ft_close, data);
+	mlx_key_hook(data->mlx->win, *ft_close, data);
+	mlx_loop(data->mlx->mlx);
+		
 }
 
 /* void	ft_print_data(t_data *data)

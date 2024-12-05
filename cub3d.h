@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/04 14:22:31 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/05 14:05:20 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,20 +192,19 @@ int					ft_close(int keycode, t_data *data);
 //06_render_map.c
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void				draw_square(t_data *data, char c, int d_x, int d_y);
-void				draw_grid(t_data *data);
+void				calculate_fov(t_data *data);
 void				draw_player(t_data *data);
-void				draw_pito(t_data *data, float desf, int lenght);
+void				prepare_rays(t_data *data, float desf, int lenght);
 // void				draw_line(t_data *data, float x, float y, float angle, int length);
-void				draw_line(t_data *data, float x_start, float y_start, float angle, float distance, int color);
-
+void				draw_line(t_data *data, float x_start, float y_start, float angle, float steps);
 //07_hooks.c
 int					ft_hooks( int keycode, t_data *data);
 int					ft_rotation(int keycode, t_data *data);
 
 //08_3d.c
-void				wall_side(t_data *data, int x, int y, float angle);
-void				ft_horizonte(int dist_ray, int color, t_data *data);
-
+int					wall_side(int x, int y);
+void				ft_drawcf(t_data *data);
+void				draw_colum(t_data *data, int color, int dist_wall);
 
 
 #endif
