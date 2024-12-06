@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:31:51 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/29 13:06:49 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/06 11:33:32 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ void	ft_free_checker(t_checks *checker)
 	return ;
 }
 
+void	ft_free_semichecker(t_checks *checker)
+{
+	free(checker->north_texture);
+	free(checker->south_texture);
+	free(checker->west_texture);
+	free(checker->east_texture);
+	free(checker);
+	printf("ERROR: Bad map format.\n");
+}
+
 void	ft_free_data(t_data *data)
 {
 	ft_free_split(data->map->grid);
@@ -44,7 +54,10 @@ void	ft_free_data(t_data *data)
 	free(data->asset->west_texture);
 	free(data->asset->east_texture);
 	free(data->asset);
-	free(data->textures);
+	free(data->n_texture);
+	free(data->s_texture);
+	free(data->w_texture);
+	free(data->e_texture);
 	free(data->mlx);
 	return ;
 }

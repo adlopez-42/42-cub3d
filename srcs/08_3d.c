@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:46:56 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/05 14:11:27 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/06 12:32:48 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 //1. Coger el horizonte y pintar mitad arriba y mitad abajo con las color techo y suelo
 //2. Me llega la distancia y el color de lo que voy a pintar. Depende de que parte de la pared pintar de colores
 //3. Identificar en que columna estoy pintando. Por cada rayo pintar en una columna
+//Esta función pinta el fondo del juego
 void	ft_drawcf(t_data *data)
 {
 	int	x;
@@ -38,6 +39,7 @@ void	ft_drawcf(t_data *data)
 	}
 }
 
+//Esta función pinta las columnas en función de los rayos y su distancia.
 void	draw_colum(t_data *data, int color, int dist_wall)
 {
 	static int	x = 0;

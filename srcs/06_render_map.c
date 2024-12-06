@@ -6,36 +6,16 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/05 13:25:08 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/06 12:48:30 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-/* 
-    1. Pintar el mapa con los cuadrados
-    2. Pintar como un punto el jugador
-    3. Pintar el pitilin segun la direccion que mira el jugador
-    4. Tiene que rotar
-    5. FOV
- */
 //Places a pixel
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
-
-	/* if (data->mlx->img_addr == NULL)
-		printf("tamo null img addr\n");
-
-	if (data->mlx->size_line)
-		printf("tamo null size line\n");
-	
-	if (data->mlx->bit_per_pixel)
-		printf("tamo null bpp\n"); */
-
-	// printf("Image address: %p\n", data->mlx->img_addr);
-	// printf("Size line address: %p\n", &data->mlx->size_line);
-	// printf("Bit per pixel address: %p\n", &data->mlx->bit_per_pixel);
 	
 	if ((x < 0 || x > data->mlx->width_window) \
 	|| (y < 0 || y > data->mlx->height_window))
@@ -79,9 +59,11 @@ void	draw_square(t_data *data, char c, int d_x, int d_y)
 	//printf("%i %i\n", x, y);
 }
 
+//Calculamos el conon de visión del player. Ej: El player empieza en el N. Su cono de visión por omisión son 90º derech.
+//Tenemos que ajustarlo para que el player entero tenga un campo de visión igual no solo un lado del player.
 void	calculate_fov(t_data *data)
 {
-/* 	int	x;
+	int	x;
 	int	y;
 
 	y = 0;
@@ -95,10 +77,11 @@ void	calculate_fov(t_data *data)
 		}
 		y++;
 	}
-	draw_player(data); */
+	draw_player(data);
 	float	start_des;
 	float	end_des;
 	int		i = 0;
+	//float	step = 1;
 
 	//Mirar el desfase que no esta bien calculado
 	start_des = 30 * (PI / 180.0) + (PI / 2); //Ajustar bien el desfase
@@ -112,28 +95,45 @@ void	calculate_fov(t_data *data)
 		start_des -= 0.0003;
 		//start_des -= 0.3;
 		i++;
+		//start_des -= step;
 	}
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 	
 	//printf("Cuantas veces entro[%d]\n", i); //i == pixeles horizontales de la ventana
 }
 
+//Calcula la distancia del rayo cuando choca una pared
+/* int	calculate_ray_dist(int x_start, int y_start, int x_end, int y_end)
+{
+	float	dist_ray;
+
+	dist_ray = 0;
+	while (sqrt((x_end - y_start) * (x_end - y_end) + (y_end - x_start) * (y_end - x_start)))
+	{
+		dist_ray++;
+	}
+	return (dist_ray);
+} */
+
+/* int	calculate_ray_dist(int x_start, int y_start, int x_end, int y_end)
+{
+	return (sqrt((x_end - y_start) * (x_end - y_end) + (y_end - x_start) * (y_end - x_start)));
+} */
+
+//Calculamos la distancia de cada rayo y hacemos la matemática para que el rayo mas largo lo pintemos con un valor mas pequeño y viceversa
+//Esto es para dar sensación de cercanía o lejanía
 void draw_line(t_data *data, float x_start, float y_start, float angle, float steps)
 {
 	// Calcular las coordenadas del final de la línea
 	float x_end = x_start + steps * cos(angle);
 	float y_end = y_start + steps * sin(angle);
-
-	// Dibuja la línea pixel a pixel
-	// float x = x_start;
-	// float y = y_start;
-	
 	int	color = 0;
 	int	i = 0;
 	float t;  // Proporción de la distancia recorrida
 	int x_current;
 	int y_current;
 	int	dist_wall = 0;
+
 	while (i++ < steps)
 	{
 		t = (float)i / (float)steps;
@@ -143,12 +143,13 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float st
 			break;
 	}
 	dist_wall = 5000 / i;
-	
+	//dist_wall = calculate_ray_dist(x_start, y_start, x_end, y_end) / 100;
 	color = wall_side(x_current, y_current);
 	draw_colum(data, color, dist_wall);
-	//printf("distancia %d\n", dist_wall);
+	printf("distancia %d\n", dist_wall);
 }
 
+//Preparamos los rayos para que estes acorde con las dimensiones de la ventana y no solo del mapa.
 void	prepare_rays(t_data *data, float desf, int lenght)
 {
 	float pos_x;
@@ -164,6 +165,7 @@ void	prepare_rays(t_data *data, float desf, int lenght)
 	//mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 
 }
+
 void	draw_player(t_data *data)
 {
 	int	x;
@@ -192,6 +194,7 @@ void	draw_player(t_data *data)
 	}
 }
 
+//Nos dice que parte del cuadrado es: Parte superior, inferior, derecha o izquierda.
 int	wall_side(int x, int y)
 {
 	int color;

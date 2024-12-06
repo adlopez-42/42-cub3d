@@ -6,11 +6,12 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:38 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/05 13:21:20 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/06 11:41:17 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
 
 void	load_image(t_data *data)
 {
@@ -20,9 +21,41 @@ void	load_image(t_data *data)
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 }
 
+char	*ft_clean_path(char *oldpath)
+{
+	int		idx;
+	int		idy;
+	char	*newpath;
+
+	newpath = malloc(sizeof(char *) * 1024);
+	idx = 2;
+	while (oldpath[idx])
+	{
+		while (oldpath[idx] == ' ')
+			idx++;
+		newpath[idx] = oldpath[idx];
+		idx++;
+		idy++;
+	}
+	newpath[idy] = '\0';
+	return (newpath);
+}
+
+void	ft_textures_mlxinit(t_data **data)
+{
+	(*data)->n_texture = ft_setup_texture(ft_clean_path((*data)->asset->north_texture), (*data)->mlx);
+	(*data)->s_texture = ft_setup_texture(ft_clean_path((*data)->asset->south_texture), (*data)->mlx);
+	(*data)->w_texture = ft_setup_texture(ft_clean_path((*data)->asset->west_texture), (*data)->mlx);
+	(*data)->e_texture = ft_setup_texture(ft_clean_path((*data)->asset->east_texture), (*data)->mlx);
+}
 
 void	ft_cub3d(t_data *data)
 {
+	// ft_textures_mlxinit(&data);
+	// printf("n_texture %s\n", data->n_texture->address);
+	// printf("s_texture %s\n", data->s_texture->address);
+	// printf("w_texture %s\n", data->w_texture->address);
+	// printf("e_texture %s\n", data->e_texture->address);
 	load_image(data);
 	mlx_hook(data->mlx->win, 2, 3, *ft_hooks, data);
 	mlx_hook(data->mlx->win, 17, 0, *ft_close, data);

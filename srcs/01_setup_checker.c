@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:31:13 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/29 13:12:07 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/06 12:37:12 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,22 @@ t_checks	*ft_setup_checker(int fd)
 	newchecker->south_texture = ft_texture_data(input, 1);
 	newchecker->west_texture = ft_texture_data(input, 2);
 	newchecker->east_texture = ft_texture_data(input, 3);
-	newchecker->map = ft_setup_map(input);
 	ft_setup_rgbs(&newchecker, input);
+	if (newchecker->c_red && newchecker->f_green && newchecker->north_texture && \
+		newchecker->south_texture && newchecker->west_texture && newchecker->east_texture)
+		newchecker->map = ft_setup_map(input);
+	else
+	{
+		ft_free_split(input);
+		ft_free_semichecker(newchecker);
+		return (NULL);
+	}
 	ft_free_split(input);
 	return (newchecker);
+	// newchecker->map = ft_setup_map(input);
+	// ft_setup_rgbs(&newchecker, input);
+	// ft_free_split(input);
+	// return (newchecker);
 }
 
 void	ft_setup_rgbs(t_checks **checker, char **input)

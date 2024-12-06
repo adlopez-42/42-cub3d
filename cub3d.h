@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/05 14:05:20 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/06 12:19:58 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@
 # define MORADO 0x7306BC
 # define VERDE 0x099F1D
 # define AZUL 0X146BD0
+
+# define W_HEIGHT 1964
+# define W_WIDTH 3491
 
 
 
@@ -111,7 +114,10 @@ typedef struct s_data
 	t_asset			*asset;
 	t_pos			*playerpos;
 	t_mlx			*mlx;
-	t_image_info	*textures;
+	t_image_info	*n_texture;
+	t_image_info	*s_texture;
+	t_image_info	*w_texture;
+	t_image_info	*e_texture;
 }					t_data;
 
 
@@ -161,6 +167,7 @@ int					ft_cub(char *argv);
 void				ft_free_split(char **data);
 void				ft_free_checker(t_checks *checker);
 void				ft_free_data(t_data *data);
+void				ft_free_semichecker(t_checks *checker);
 
 //01_setup_checker.c
 t_checks	*		ft_setup_checker(int fd);
@@ -178,10 +185,10 @@ int					ft_map_checks(t_checks *checker);
 
 //03_setup_data.c
 t_data				*ft_setup_data(t_checks *checker);
-t_image_info		*ft_setup_textures(void);
 t_pos				*ft_playerpos(char **map);
 t_mlx				*ft_mlx_init(t_map *map);
 t_asset				*ft_setup_assets(t_checks *checker);
+t_image_info		*ft_setup_texture(char *path, t_mlx *mlx);
 
 //04_setup_map.c
 t_map				*ft_clean_map(char **checkermap);
@@ -197,6 +204,8 @@ void				draw_player(t_data *data);
 void				prepare_rays(t_data *data, float desf, int lenght);
 // void				draw_line(t_data *data, float x, float y, float angle, int length);
 void				draw_line(t_data *data, float x_start, float y_start, float angle, float steps);
+int					calculate_ray_dist(int x_start, int y_start, int x_end, int y_end);
+
 //07_hooks.c
 int					ft_hooks( int keycode, t_data *data);
 int					ft_rotation(int keycode, t_data *data);

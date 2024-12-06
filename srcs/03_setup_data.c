@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:55:28 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/05 12:11:29 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/06 11:58:19 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ t_data	*ft_setup_data(t_checks *checker)
 	voidata->map = ft_clean_map(checker->map);
 	voidata->asset = ft_setup_assets(checker);
 	voidata->playerpos = ft_playerpos(checker->map);
-	voidata->textures = ft_setup_textures();
 	voidata->mlx = ft_mlx_init(voidata->map);
 	return (voidata);
 }
 
-t_image_info	*ft_setup_textures(void)
+/* t_image_info	*ft_setup_textures(void)
 {
 	t_image_info *new;
 
@@ -36,7 +35,7 @@ t_image_info	*ft_setup_textures(void)
 	new->image_charge = NULL;
 	new->line_s = 0;
 	return (new);
-}
+} */
 
 t_pos	*ft_playerpos(char **map)
 {
@@ -72,14 +71,14 @@ t_mlx	*ft_mlx_init(t_map *map)
 	(void)map;
 	new = (t_mlx *)malloc(sizeof(t_mlx));
 	new->mlx = mlx_init();
-	new->win = mlx_new_window(new->mlx, 3491, 1964, "cub3d no payo");
+	new->win = mlx_new_window(new->mlx, W_WIDTH, W_HEIGHT, "cub3d no payo");
 	// new->win = mlx_new_window(new->mlx, map->width * 100, map->height * 100, "cubed");
-	new->img =  mlx_new_image(new->mlx, 3491, 1964);
+	new->img =  mlx_new_image(new->mlx, W_WIDTH, W_HEIGHT);
 	if (new->img == NULL)
 		printf("la img ta null\n");
 	new->img_addr = mlx_get_data_addr(new->img, &new->bit_per_pixel, &new->size_line, &new->endian);
-	new->width_window = 3491;
-	new->height_window = 1964;
+	new->width_window = W_WIDTH;
+	new->height_window = W_HEIGHT;
 	return (new);
 }
 
@@ -104,5 +103,19 @@ t_asset	*ft_setup_assets(t_checks *checker)
 	floor[2] = checker->f_blue;
 	new->cieling_rgb = cieling;
 	new->floor_rgb = floor;
+	return (new);
+}
+
+t_image_info	*ft_setup_texture(char *path, t_mlx *mlx)
+{
+	t_image_info *new;
+	
+	new = malloc(sizeof(t_image_info));
+	new->line_s = 500;
+	new->image_charge = mlx_xpm_file_to_image(mlx->mlx, path, &(new->line_s), &(new->line_s));
+	new->address = mlx_get_data_addr(new->image_charge, &(new->bpp), &(new->line_s), &(new->endian));
+	if (new->image_charge)
+		new->created = 1;
+	free(path);
 	return (new);
 }
