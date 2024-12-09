@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:46:56 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/06 12:32:48 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/09 14:01:37 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_drawcf(t_data *data)
 }
 
 //Esta función pinta las columnas en función de los rayos y su distancia.
-void	draw_colum(t_data *data, int color, int dist_wall)
+/* void	draw_colum(t_data *data, int color, int dist_wall)
 {
 	static int	x = 0;
 	int			y;
@@ -68,5 +68,41 @@ void	draw_colum(t_data *data, int color, int dist_wall)
 		y++;
 	}
 	x++;
+} */
+
+void draw_colum(t_data *data, int color, int dist_wall)
+{
+	static int x = 0;
+	int y;
+	int horizonte;
+
+	horizonte = data->mlx->height_window / 2;
+	y = 0;
+	if (x == data->mlx->width_window)
+		x = 0;
+
+	dist_wall = dist_wall;
+
+	int start = horizonte - dist_wall;
+	int end = horizonte + dist_wall;
+
+	while (y <= data->mlx->height_window)
+	{
+		if (y >= start && y <= end)
+		{
+			my_mlx_pixel_put(data, x, y, color);
+		}
+		else
+		{
+			if (y < horizonte)
+				my_mlx_pixel_put(data, x, y, GRIS); // Color del cielo
+			else
+				my_mlx_pixel_put(data, x, y, BLANCO); // Color del suelo
+		}
+		y++;
+	}
+	x++;
 }
+
+
 

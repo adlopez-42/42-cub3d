@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/06 12:19:58 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/09 13:22:00 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ int					ft_rotation(int keycode, t_data *data);
 int					wall_side(int x, int y);
 void				ft_drawcf(t_data *data);
 void				draw_colum(t_data *data, int color, int dist_wall);
+
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/06 12:48:30 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/09 13:58:45 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	+ (x * (data->mlx->bit_per_pixel / 8));
 	*(unsigned int *) dst = color;
 }
+
 
 void	draw_square(t_data *data, char c, int d_x, int d_y)
 {
@@ -63,7 +64,7 @@ void	draw_square(t_data *data, char c, int d_x, int d_y)
 //Tenemos que ajustarlo para que el player entero tenga un campo de visión igual no solo un lado del player.
 void	calculate_fov(t_data *data)
 {
-	int	x;
+	/* int	x;
 	int	y;
 
 	y = 0;
@@ -77,30 +78,29 @@ void	calculate_fov(t_data *data)
 		}
 		y++;
 	}
-	draw_player(data);
+	draw_player(data); */
 	float	start_des;
 	float	end_des;
 	int		i = 0;
-	//float	step = 1;
 
 	//Mirar el desfase que no esta bien calculado
 	start_des = 30 * (PI / 180.0) + (PI / 2); //Ajustar bien el desfase
 	end_des = -30 * (PI / 180.0) + (PI / 2);
 
-	
+	float step = 0.0003 / 2;
 	//este bucle se tiene que repetir por todos los pixeles horizontales haya.
 	while (start_des >= end_des)
 	{
 		prepare_rays(data, start_des, 3000);
-		start_des -= 0.0003;
-		//start_des -= 0.3;
+		//start_des -= 0.0003;
+		start_des -= step;
 		i++;
-		//start_des -= step;
 	}
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 	
 	//printf("Cuantas veces entro[%d]\n", i); //i == pixeles horizontales de la ventana
 }
+
 
 //Calcula la distancia del rayo cuando choca una pared
 /* int	calculate_ray_dist(int x_start, int y_start, int x_end, int y_end)
@@ -113,11 +113,6 @@ void	calculate_fov(t_data *data)
 		dist_ray++;
 	}
 	return (dist_ray);
-} */
-
-/* int	calculate_ray_dist(int x_start, int y_start, int x_end, int y_end)
-{
-	return (sqrt((x_end - y_start) * (x_end - y_end) + (y_end - x_start) * (y_end - x_start)));
 } */
 
 //Calculamos la distancia de cada rayo y hacemos la matemática para que el rayo mas largo lo pintemos con un valor mas pequeño y viceversa
@@ -142,12 +137,15 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float st
 		if (data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] == '1')
 			break;
 	}
-	dist_wall = 5000 / i;
+	//eliminar dientes de sierra
+	float corrected_dist = i * cos(angle - data->playerpos->dir);
+	dist_wall = 5000 / corrected_dist;
 	//dist_wall = calculate_ray_dist(x_start, y_start, x_end, y_end) / 100;
 	color = wall_side(x_current, y_current);
 	draw_colum(data, color, dist_wall);
-	printf("distancia %d\n", dist_wall);
+	//printf("distancia %d\n", dist_wall);
 }
+
 
 //Preparamos los rayos para que estes acorde con las dimensiones de la ventana y no solo del mapa.
 void	prepare_rays(t_data *data, float desf, int lenght)
@@ -193,6 +191,7 @@ void	draw_player(t_data *data)
 		y++;
 	}
 }
+
 
 //Nos dice que parte del cuadrado es: Parte superior, inferior, derecha o izquierda.
 int	wall_side(int x, int y)
