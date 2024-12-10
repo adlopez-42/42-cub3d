@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:46:56 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/09 14:01:37 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/10 12:54:49 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,10 @@ void draw_colum(t_data *data, int color, int dist_wall)
 	}
 	x++;
 }
+
+
+//1. Perpendicular: dir y es a 90º de esa direccion
+//2. 
 
 
 

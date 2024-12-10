@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/09 13:58:45 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/10 14:07:50 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,67 @@ void	calculate_fov(t_data *data)
 	return (dist_ray);
 } */
 
+
+
+
+int	perp_player(int x, int y, t_data *data)
+{
+	float	angle;
+
+	angle = data->playerpos->dir;
+	float px = data->playerpos->x * TILE_SIZE;
+    float py = data->playerpos->y * TILE_SIZE;
+
+    // Calcular componentes del vector perpendicular
+    float perp_dx = -sin(angle);
+    float perp_dy = cos(angle);
+
+    // Evaluar si (x, y) pertenece a la línea perpendicular
+    float dx = x - px;
+    float dy = y - py;
+
+    // Producto cruzado para verificar alineación
+    float cross_product = dx * perp_dy - dy * perp_dx;
+
+    // Si el producto cruzado es 0, está en la línea
+    return fabs(cross_product) < 1e-6;
+}
+
+int calculate_perp_point(t_data *data, float x_start, float y_start, float angle, float steps)
+{
+	// Calcular las coordenadas del final de la línea
+	float x_end = x_start + steps * cos(angle);
+	float y_end = y_start + steps * sin(angle);
+	//int	color = 0;
+	int	i = 0;
+	float t;  // Proporción de la distancia recorrida
+	int x_current;
+	int y_current;
+	//int	dist_wall = 0;
+
+	while (i++ < steps)
+	{
+		t = (float)i / (float)steps;
+		x_current = (int)(x_start + t * (x_end - x_start));
+		y_current = (int)(y_start + t * (y_end - y_start));
+		printf("perp_player: %d\n", perp_player(x_current, y_current, data));
+		if (perp_player(x_current, y_current, data) == 0)
+		{
+			//dist_wall = (int)sqrt((x_current - x_start) * (x_current - x_start) + (y_current - y_start) * (y_current - y_start));
+			break ;
+		}
+	}
+	// printf("distancia: %d\n", i);
+	printf("x_current[%d] y y_current[%d]\n", x_current, y_current);
+	// printf("x_player: %f y_player: %f\n", data->playerpos->x * TILE_SIZE, data->playerpos->y *TILE_SIZE);
+	printf("x_start[%f]: y y_start[%f]\n", x_start, y_start);
+	return (i);
+}
+
+
+
+
+
 //Calculamos la distancia de cada rayo y hacemos la matemática para que el rayo mas largo lo pintemos con un valor mas pequeño y viceversa
 //Esto es para dar sensación de cercanía o lejanía
 void draw_line(t_data *data, float x_start, float y_start, float angle, float steps)
@@ -137,10 +198,7 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float st
 		if (data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] == '1')
 			break;
 	}
-	//eliminar dientes de sierra
-	float corrected_dist = i * cos(angle - data->playerpos->dir);
-	dist_wall = 5000 / corrected_dist;
-	//dist_wall = calculate_ray_dist(x_start, y_start, x_end, y_end) / 100;
+	dist_wall = calculate_perp_point(data, y_current, x_current, data->playerpos->dir + PI, steps);
 	color = wall_side(x_current, y_current);
 	draw_colum(data, color, dist_wall);
 	//printf("distancia %d\n", dist_wall);

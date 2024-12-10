@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:38 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/06 11:41:17 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/09 14:06:41 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_textures_mlxinit(t_data **data)
 
 void	ft_cub3d(t_data *data)
 {
-	// ft_textures_mlxinit(&data);
+	//ft_textures_mlxinit(&data);
 	// printf("n_texture %s\n", data->n_texture->address);
 	// printf("s_texture %s\n", data->s_texture->address);
 	// printf("w_texture %s\n", data->w_texture->address);
