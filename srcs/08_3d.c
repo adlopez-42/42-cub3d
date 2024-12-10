@@ -80,12 +80,8 @@ void draw_colum(t_data *data, int color, int dist_wall)
 	y = 0;
 	if (x == data->mlx->width_window)
 		x = 0;
-
-	dist_wall = dist_wall;
-
-	int start = horizonte - dist_wall;
-	int end = horizonte + dist_wall;
-
+	int start = horizonte - dist_wall / 2;
+	int end = horizonte + dist_wall / 2;
 	while (y <= data->mlx->height_window)
 	{
 		if (y >= start && y <= end)

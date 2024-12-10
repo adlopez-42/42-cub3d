@@ -64,21 +64,6 @@ void	draw_square(t_data *data, char c, int d_x, int d_y)
 //Tenemos que ajustarlo para que el player entero tenga un campo de visión igual no solo un lado del player.
 void	calculate_fov(t_data *data)
 {
-	/* int	x;
-	int	y;
-
-	y = 0;
-	while(y < data->map->height)
-	{
-		x = 0;
-		while(x < data->map->width)
-		{
-			draw_square(data, data->map->grid[y][x], x, y);
-			x++;
-		}
-		y++;
-	}
-	draw_player(data); */
 	float	start_des;
 	float	end_des;
 	int		i = 0;
@@ -87,8 +72,8 @@ void	calculate_fov(t_data *data)
 	start_des = 30 * (PI / 180.0) + (PI / 2); //Ajustar bien el desfase
 	end_des = -30 * (PI / 180.0) + (PI / 2);
 
-	float step = 0.0003 / 2;
-	//este bucle se tiene que repetir por todos los pixeles horizontales haya.
+	float step = 0.00092;
+	//este bucle se tiene qie repetir por todos los pixeles horizontales haya.
 	while (start_des >= end_des)
 	{
 		prepare_rays(data, start_des, 3000);
@@ -98,7 +83,7 @@ void	calculate_fov(t_data *data)
 	}
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
 	
-	//printf("Cuantas veces entro[%d]\n", i); //i == pixeles horizontales de la ventana
+	// printf("Cuantas veces entro[%d]\n", i); //i == pixeles horizontales de la ventana
 }
 
 
@@ -115,67 +100,6 @@ void	calculate_fov(t_data *data)
 	return (dist_ray);
 } */
 
-
-
-
-int	perp_player(int x, int y, t_data *data)
-{
-	float	angle;
-
-	angle = data->playerpos->dir;
-	float px = data->playerpos->x * TILE_SIZE;
-    float py = data->playerpos->y * TILE_SIZE;
-
-    // Calcular componentes del vector perpendicular
-    float perp_dx = -sin(angle);
-    float perp_dy = cos(angle);
-
-    // Evaluar si (x, y) pertenece a la línea perpendicular
-    float dx = x - px;
-    float dy = y - py;
-
-    // Producto cruzado para verificar alineación
-    float cross_product = dx * perp_dy - dy * perp_dx;
-
-    // Si el producto cruzado es 0, está en la línea
-    return fabs(cross_product) < 1e-6;
-}
-
-int calculate_perp_point(t_data *data, float x_start, float y_start, float angle, float steps)
-{
-	// Calcular las coordenadas del final de la línea
-	float x_end = x_start + steps * cos(angle);
-	float y_end = y_start + steps * sin(angle);
-	//int	color = 0;
-	int	i = 0;
-	float t;  // Proporción de la distancia recorrida
-	int x_current;
-	int y_current;
-	//int	dist_wall = 0;
-
-	while (i++ < steps)
-	{
-		t = (float)i / (float)steps;
-		x_current = (int)(x_start + t * (x_end - x_start));
-		y_current = (int)(y_start + t * (y_end - y_start));
-		printf("perp_player: %d\n", perp_player(x_current, y_current, data));
-		if (perp_player(x_current, y_current, data) == 0)
-		{
-			//dist_wall = (int)sqrt((x_current - x_start) * (x_current - x_start) + (y_current - y_start) * (y_current - y_start));
-			break ;
-		}
-	}
-	// printf("distancia: %d\n", i);
-	printf("x_current[%d] y y_current[%d]\n", x_current, y_current);
-	// printf("x_player: %f y_player: %f\n", data->playerpos->x * TILE_SIZE, data->playerpos->y *TILE_SIZE);
-	printf("x_start[%f]: y y_start[%f]\n", x_start, y_start);
-	return (i);
-}
-
-
-
-
-
 //Calculamos la distancia de cada rayo y hacemos la matemática para que el rayo mas largo lo pintemos con un valor mas pequeño y viceversa
 //Esto es para dar sensación de cercanía o lejanía
 void draw_line(t_data *data, float x_start, float y_start, float angle, float steps)
@@ -188,7 +112,7 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float st
 	float t;  // Proporción de la distancia recorrida
 	int x_current;
 	int y_current;
-	int	dist_wall = 0;
+//	int	dist_wall = 0;
 
 	while (i++ < steps)
 	{
@@ -198,12 +122,21 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float st
 		if (data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] == '1')
 			break;
 	}
-	dist_wall = calculate_perp_point(data, y_current, x_current, data->playerpos->dir + PI, steps);
+	//dist_wall = (ft_distancia(x_current, y_current, data->playerpos) / cos(90 - angle));
 	color = wall_side(x_current, y_current);
-	draw_colum(data, color, dist_wall);
-	//printf("distancia %d\n", dist_wall);
+	draw_colum(data, color, ((TILE_SIZE * W_HEIGHT) / (ft_distancia(x_current, y_current, data->playerpos)) / cos(angle * (PI / 360))));
+	// printf("distancia %i\n", ft_distancia(x_current, y_current, data->playerpos));
 }
 
+int	ft_distancia(int x, int y, t_pos *player)
+{
+	int num;
+	int	num2;
+
+	num = (x - (player->x * TILE_SIZE)) * (x - (player->x * TILE_SIZE));
+	num2 = (y - (player->y * TILE_SIZE)) * (y - (player->y * TILE_SIZE));
+	return (sqrt(num + num2));
+}
 
 //Preparamos los rayos para que estes acorde con las dimensiones de la ventana y no solo del mapa.
 void	prepare_rays(t_data *data, float desf, int lenght)
@@ -219,7 +152,6 @@ void	prepare_rays(t_data *data, float desf, int lenght)
 	//printf("pos_x[%f] y pos_y[%f] angle[%f]\n", pos_x, pos_y, angle);
 	draw_line(data, pos_x, pos_y, angle, lenght);
 	//mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
-
 }
 
 void	draw_player(t_data *data)
@@ -262,7 +194,7 @@ int	wall_side(int x, int y)
 	else if ((y % TILE_SIZE) == 0)
 		color = ROSA;
 	else if ((x % TILE_SIZE) == 0)
-		color = ROSA;
+		color = VERDE;
 	else if (((x + 1) % (TILE_SIZE)) == 0)
 		color = AZUL;
 	else if (((y + 1) % (TILE_SIZE)) == 0)

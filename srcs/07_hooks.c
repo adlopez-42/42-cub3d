@@ -86,9 +86,9 @@ int	ft_rotation(int keycode, t_data *data)
 	float	angle;
 	angle = data->playerpos->dir;
 	if (keycode == RIGHT)
-		angle -= 0.05;
+		angle -= 0.1;
 	else if (keycode == LEFT)
-		angle += 0.05;
+		angle += 0.1;
 	else
 		printf("error rotation %i\n", keycode);
 		

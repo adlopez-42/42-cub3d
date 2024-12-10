@@ -54,8 +54,8 @@
 # define VERDE 0x099F1D
 # define AZUL 0X146BD0
 
-# define W_HEIGHT 1964
-# define W_WIDTH 3491
+# define W_HEIGHT 640
+# define W_WIDTH 1139
 
 
 
@@ -205,6 +205,7 @@ void				prepare_rays(t_data *data, float desf, int lenght);
 // void				draw_line(t_data *data, float x, float y, float angle, int length);
 void				draw_line(t_data *data, float x_start, float y_start, float angle, float steps);
 int					calculate_ray_dist(int x_start, int y_start, int x_end, int y_end);
+int					ft_distancia(int x, int y, t_pos *player);
 
 //07_hooks.c
 int					ft_hooks( int keycode, t_data *data);
