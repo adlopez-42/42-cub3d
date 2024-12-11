@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:38 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/09 14:06:41 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:18:47 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	load_image(t_data *data)
 {
-	//mlx_clear_window(data->mlx->mlx, data->mlx->win);
+	mlx_clear_window(data->mlx->mlx, data->mlx->win);
 	ft_drawcf(data);
 	calculate_fov(data);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
@@ -28,12 +28,13 @@ char	*ft_clean_path(char *oldpath)
 	char	*newpath;
 
 	newpath = malloc(sizeof(char *) * 1024);
-	idx = 2;
+	idx = 3;
+	idy = 0;
 	while (oldpath[idx])
 	{
-		while (oldpath[idx] == ' ')
+		while (oldpath[idx] && oldpath[idy] == ' ')
 			idx++;
-		newpath[idx] = oldpath[idx];
+		newpath[idy] = oldpath[idx];
 		idx++;
 		idy++;
 	}

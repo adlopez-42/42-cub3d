@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/09 13:22:00 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:25:48 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@
 # define VERDE 0x099F1D
 # define AZUL 0X146BD0
 
-# define W_HEIGHT 1964
-# define W_WIDTH 3491
+// # define W_HEIGHT 1964
+// # define W_WIDTH 3491
+
+# define WINDOW_RATIO 80
 
 
 
@@ -139,7 +141,7 @@ typedef struct s_checks
 }					t_checks;
 
 // functions
-
+void				load_image(t_data *data);
 //utils
 //static int			count_words(const char *str, char c);
 //static char			*word_dup(const char *str, int start, int finish);
@@ -202,9 +204,8 @@ void				draw_square(t_data *data, char c, int d_x, int d_y);
 void				calculate_fov(t_data *data);
 void				draw_player(t_data *data);
 void				prepare_rays(t_data *data, float desf, int lenght);
-// void				draw_line(t_data *data, float x, float y, float angle, int length);
 void				draw_line(t_data *data, float x_start, float y_start, float angle, float steps);
-int					calculate_ray_dist(int x_start, int y_start, int x_end, int y_end);
+int					ft_distancia(int x, int y, t_pos *player);
 
 //07_hooks.c
 int					ft_hooks( int keycode, t_data *data);

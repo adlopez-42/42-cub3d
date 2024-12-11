@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 12:29:39 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/05 13:28:38 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:26:39 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,7 @@ int	ft_hooks(int keycode, t_data *data)
 	else
 		ft_rotation(keycode, data);
 	
-	ft_drawcf(data);
-	calculate_fov(data); // Dibujar la rejilla
+	load_image(data);
 	return (keycode);
 }
 
@@ -86,11 +85,11 @@ int	ft_rotation(int keycode, t_data *data)
 	float	angle;
 	angle = data->playerpos->dir;
 	if (keycode == RIGHT)
-		angle -= 0.05;
+		angle -= 0.0095;
 	else if (keycode == LEFT)
-		angle += 0.05;
-	else
-		printf("error rotation %i\n", keycode);
+		angle += 0.0095;
+	// else
+	// 	printf("error rotation %i\n", keycode);
 		
 	data->playerpos->dir = angle;
 	return (keycode);

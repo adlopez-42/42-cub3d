@@ -1,7 +1,7 @@
-NO assets/armenistan.xpm
-SO assets/pakistan.xpm
-WE assets/turkmenistan.xpm
-EA assets/uzbekistan.xpm
+NO ./assets/armenistan.xpm
+SO ./assets/pakistan.xpm
+WE ./assets/turkmenistan.xpm
+EA ./assets/uzbekistan.xpm
 
 F 200, 100, 50
 C 256, 255, 100

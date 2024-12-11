@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:55:28 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/06 11:58:19 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/11 11:53:39 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,14 @@ t_mlx	*ft_mlx_init(t_map *map)
 	(void)map;
 	new = (t_mlx *)malloc(sizeof(t_mlx));
 	new->mlx = mlx_init();
-	new->win = mlx_new_window(new->mlx, W_WIDTH, W_HEIGHT, "cub3d no payo");
+	new->win = mlx_new_window(new->mlx, 16 * WINDOW_RATIO, 9 * WINDOW_RATIO, "cub3d no payo");
 	// new->win = mlx_new_window(new->mlx, map->width * 100, map->height * 100, "cubed");
-	new->img =  mlx_new_image(new->mlx, W_WIDTH, W_HEIGHT);
+	new->img =  mlx_new_image(new->mlx, 16 * WINDOW_RATIO, 9 * WINDOW_RATIO);
 	if (new->img == NULL)
 		printf("la img ta null\n");
 	new->img_addr = mlx_get_data_addr(new->img, &new->bit_per_pixel, &new->size_line, &new->endian);
-	new->width_window = W_WIDTH;
-	new->height_window = W_HEIGHT;
+	new->width_window = 16 * WINDOW_RATIO;
+	new->height_window = 9 * WINDOW_RATIO;
 	return (new);
 }
 
@@ -111,11 +111,13 @@ t_image_info	*ft_setup_texture(char *path, t_mlx *mlx)
 	t_image_info *new;
 	
 	new = malloc(sizeof(t_image_info));
-	new->line_s = 500;
-	new->image_charge = mlx_xpm_file_to_image(mlx->mlx, path, &(new->line_s), &(new->line_s));
-	new->address = mlx_get_data_addr(new->image_charge, &(new->bpp), &(new->line_s), &(new->endian));
+	if (!new)
+		return (NULL);
+	int	temp_width;
+	new->image_charge = mlx_xpm_file_to_image(mlx->mlx, path, &temp_width, &(new->line_s));
 	if (new->image_charge)
 		new->created = 1;
+	new->address = mlx_get_data_addr(new->image_charge, &(new->bpp), &(new->line_s), &(new->endian));
 	free(path);
 	return (new);
 }
