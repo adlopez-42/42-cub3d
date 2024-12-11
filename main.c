@@ -37,8 +37,8 @@ char	*ft_clean_path(char *oldpath)
 	idy = 0;
 	while (oldpath[idx])
 	{
-		while (oldpath[idx] && oldpath[idy] == ' ')
-			idx++;
+		//while (oldpath[idx] && oldpath[idy] == ' ')
+		//	idx++;
 		newpath[idy] = oldpath[idx];
 		idx++;
 		idy++;
@@ -57,7 +57,7 @@ void	ft_textures_mlxinit(t_data **data)
 
 void	ft_cub3d(t_data *data)
 {
-	//ft_textures_mlxinit(&data);
+	ft_textures_mlxinit(&data);
 	// printf("n_texture %s\n", data->n_texture->address);
 	// printf("s_texture %s\n", data->s_texture->address);
 	// printf("w_texture %s\n", data->w_texture->address);
@@ -118,9 +118,11 @@ int	main(int argc, char **argv)
 		data = ft_setup_data(checker);
 	//ft_free_checker(checker);
 	//ft_print_data(data);
+	printf("rgb cielo %s\nrgb suelo %s\n", data->asset->cieling_rgb, data->asset->floor_rgb);
 	if (data)
 	{
 		ft_cub3d(data);
+		printf("north texture address %s\n", data->n_texture->address);
 		ft_free_data(data);
 	}
 	return (1);

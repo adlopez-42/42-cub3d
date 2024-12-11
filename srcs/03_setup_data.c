@@ -85,25 +85,38 @@ t_mlx	*ft_mlx_init(t_map *map)
 t_asset	*ft_setup_assets(t_checks *checker)
 {
 	t_asset	*new;
-	int		*cieling;
-	int		*floor;
 
 	new = malloc(sizeof(t_asset));
-	cieling = (int *)malloc(sizeof(int) * 3);
-	floor = (int *)malloc(sizeof(int) * 3);
 	new->north_texture = ft_strdup(checker->north_texture);
 	new->south_texture = ft_strdup(checker->south_texture);
 	new->west_texture = ft_strdup(checker->west_texture);
 	new->east_texture = ft_strdup(checker->east_texture);
-	cieling[0] = checker->c_red;
-	cieling[1] = checker->c_green;
-	cieling[2] = checker->c_blue;
-	floor[0] = checker->f_red;
-	floor[1] = checker->f_green;
-	floor[2] = checker->f_blue;
-	new->cieling_rgb = cieling;
-	new->floor_rgb = floor;
+	new->cieling_rgb = ft_transform_rgb(checker->c_red, checker->c_green, checker->c_blue);
+	new->floor_rgb = ft_transform_rgb(checker->f_red, checker->f_green, checker->f_blue);
 	return (new);
+}
+
+char	*ft_transform_rgb(int red, int green, int blue)
+{
+	char	*rgb;
+
+	rgb = malloc(sizeof(char) * 8);
+	rgb[0] = '#';
+	rgb[1] = ft_rgb_char(red / 16);
+	rgb[2] = ft_rgb_char(red % 16);
+	rgb[3] = ft_rgb_char(green / 16);
+	rgb[4] = ft_rgb_char(green % 16);
+	rgb[5] = ft_rgb_char(blue / 16);
+	rgb[6] = ft_rgb_char(blue % 16);
+	rgb[7] = '\0';
+	return (rgb);
+}
+
+char	ft_rgb_char(int value)
+{
+	if (value < 10)
+		return ('0' + value);
+	return ('A' + (value - 10));
 }
 
 t_image_info	*ft_setup_texture(char *path, t_mlx *mlx)
@@ -113,11 +126,12 @@ t_image_info	*ft_setup_texture(char *path, t_mlx *mlx)
 	new = malloc(sizeof(t_image_info));
 	if (!new)
 		return (NULL);
-	int	temp_width;
+	int	temp_width = 0;
 	new->image_charge = mlx_xpm_file_to_image(mlx->mlx, path, &temp_width, &(new->line_s));
 	if (new->image_charge)
 		new->created = 1;
 	new->address = mlx_get_data_addr(new->image_charge, &(new->bpp), &(new->line_s), &(new->endian));
 	free(path);
+	printf("address %p\n", new->address);
 	return (new);
 }

@@ -57,7 +57,7 @@
 // # define W_HEIGHT 1964
 // # define W_WIDTH 3491
 
-# define WINDOW_RATIO 85
+# define WINDOW_RATIO 35
 
 
 
@@ -92,8 +92,8 @@ typedef struct s_asset
 	char			*south_texture;
 	char			*west_texture;
 	char			*east_texture;
-	int				*cieling_rgb;
-	int				*floor_rgb;
+	char			*cieling_rgb;
+	char			*floor_rgb;
 }					t_asset;
 
 typedef struct s_playerpos
@@ -191,6 +191,8 @@ t_pos				*ft_playerpos(char **map);
 t_mlx				*ft_mlx_init(t_map *map);
 t_asset				*ft_setup_assets(t_checks *checker);
 t_image_info		*ft_setup_texture(char *path, t_mlx *mlx);
+char				ft_rgb_char(int value);
+char				*ft_transform_rgb(int red, int green, int blue);
 
 //04_setup_map.c
 t_map				*ft_clean_map(char **checkermap);

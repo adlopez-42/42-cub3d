@@ -118,7 +118,6 @@ int	ft_distancia(int x, int y, t_pos *player)
 	return (sqrt(num + num2));
 }
 
-
 //Preparamos los rayos para que estes acorde con las dimensiones de la ventana y no solo del mapa.
 void	prepare_rays(t_data *data, float desf, int lenght)
 {
