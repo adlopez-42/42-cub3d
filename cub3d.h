@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/11 12:25:48 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/11 13:55:14 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 // # define W_HEIGHT 1964
 // # define W_WIDTH 3491
 
-# define WINDOW_RATIO 80
+# define WINDOW_RATIO 85
 
 
 
@@ -141,7 +141,7 @@ typedef struct s_checks
 }					t_checks;
 
 // functions
-void				load_image(t_data *data);
+int				load_image(void *patata);
 //utils
 //static int			count_words(const char *str, char c);
 //static char			*word_dup(const char *str, int start, int finish);

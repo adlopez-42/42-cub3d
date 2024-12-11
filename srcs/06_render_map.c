@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/11 12:21:47 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/11 12:50:21 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,6 @@ int	wall_side(int x, int y)
 	else if (((y + 1) % (TILE_SIZE)) == 0)
 		color = MORADO;
 	else
-		printf("error\n");
+		printf("error no coge ningun lado\n");
 	return (color);
 }

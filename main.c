@@ -6,19 +6,24 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:38 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/11 12:18:47 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/11 13:55:04 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 
-void	load_image(t_data *data)
+int	load_image(void *patata)
 {
+	t_data *data;
+	
+	data = (t_data*)patata;
+	
 	mlx_clear_window(data->mlx->mlx, data->mlx->win);
 	ft_drawcf(data);
 	calculate_fov(data);
 	mlx_put_image_to_window(data->mlx->mlx, data->mlx->win, data->mlx->img, 0, 0);
+	return (0);
 }
 
 char	*ft_clean_path(char *oldpath)
@@ -59,8 +64,8 @@ void	ft_cub3d(t_data *data)
 	// printf("e_texture %s\n", data->e_texture->address);
 	load_image(data);
 	mlx_hook(data->mlx->win, 2, 3, *ft_hooks, data);
-	mlx_hook(data->mlx->win, 17, 0, *ft_close, data);
 	mlx_key_hook(data->mlx->win, *ft_close, data);
+	mlx_loop_hook(data->mlx->mlx, load_image, data);
 	mlx_loop(data->mlx->mlx);
 		
 }
