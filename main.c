@@ -118,7 +118,7 @@ int	main(int argc, char **argv)
 		data = ft_setup_data(checker);
 	//ft_free_checker(checker);
 	//ft_print_data(data);
-	printf("rgb cielo %s\nrgb suelo %s\n", data->asset->cieling_rgb, data->asset->floor_rgb);
+	printf("rgb cielo %d\nrgb suelo %d\n", data->asset->cieling_rgb, data->asset->floor_rgb);
 	if (data)
 	{
 		ft_cub3d(data);

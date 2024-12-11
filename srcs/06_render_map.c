@@ -88,7 +88,7 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float st
 {
 	float x_end = x_start + steps * cos(angle);
 	float y_end = y_start + steps * sin(angle);
-	int	color = 0;
+	int	color;
 	int	i = 0;
 	float t;
 	int x_current;
@@ -100,12 +100,53 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float st
 		t = (float)i / (float)steps;
 		x_current = (int)(x_start + t * (x_end - x_start));
 		y_current = (int)(y_start + t * (y_end - y_start));
-		if (data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] == '1')
-			break;
+		if (x_current < 0 || x_current >= (data->map->width * TILE_SIZE) || y_current < 0 || y_current >= (data->map->width * TILE_SIZE))
+			break ;
+		if (data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] && data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] == '1')
+			break ;
 	}
 	//dist_wall = (ft_distancia(x_current, y_current, data->playerpos) / cos(90 - angle));
-	color = wall_side(x_current, y_current);
+	color = ft_texture_color(x_current, y_current, data);
 	draw_colum(data, color, ((TILE_SIZE * data->mlx->height_window) / (ft_distancia(x_current, y_current, data->playerpos)) / cos(angle * (PI / 360))));
+}
+
+int	ft_texture_color(int x, int y, t_data *data)
+{
+	int	color;
+
+	color = 0;
+	if (((((x % TILE_SIZE) == 0) || (( x + 1 ) % TILE_SIZE) == 0)) && ((((y % TILE_SIZE) == 0) || (( y + 1 ) % TILE_SIZE) == 0)))
+		color = NEGRO;
+	else if ((y % TILE_SIZE) == 0)
+		color = ft_textures_colors(x, y, data->e_texture);
+	else if ((x % TILE_SIZE) == 0)
+		color = ft_textures_colors(x, y, data->s_texture);
+	else if (((x + 1) % (TILE_SIZE)) == 0)
+		color = ft_textures_colors(x, y, data->n_texture);
+	else if (((y + 1) % (TILE_SIZE)) == 0)
+		color = ft_textures_colors(x, y, data->w_texture);
+	else
+		color = 0;
+	return (color);
+}
+
+int	ft_textures_colors(int x, int y, t_image_info *info)
+{
+	int	tile_x;
+	int	tile_y;
+	int	pixel_pos;
+	int	color;
+
+	tile_x = x % 500;
+	//printf("x %i\n", x);
+	tile_y = y % 500;
+	//printf("y %i\n", y);
+	pixel_pos = (tile_y * info->bpp / 8) + (tile_x * (info->bpp / 8));
+	//printf("pixel pos %d\n", pixel_pos);
+	//printf("image charge %p\n", info->image_charge);
+	color = *(int *)(info->image_charge);
+	color += pixel_pos;
+	return (color);
 }
 
 int	ft_distancia(int x, int y, t_pos *player)
@@ -164,22 +205,3 @@ void	draw_player(t_data *data)
 
 
 //Nos dice que parte del cuadrado es: Parte superior, inferior, derecha o izquierda.
-int	wall_side(int x, int y)
-{
-	int	color;
-
-	color = 0;
-	if (((((x % TILE_SIZE) == 0) || (( x + 1 ) % TILE_SIZE) == 0)) && ((((y % TILE_SIZE) == 0) || (( y + 1 ) % TILE_SIZE) == 0)))
-		color = NEGRO;
-	else if ((y % TILE_SIZE) == 0)
-		color = ROSA;
-	else if ((x % TILE_SIZE) == 0)
-		color = ROSA;
-	else if (((x + 1) % (TILE_SIZE)) == 0)
-		color = AZUL;
-	else if (((y + 1) % (TILE_SIZE)) == 0)
-		color = MORADO;
-	else
-		printf("error no coge ningun lado\n");
-	return (color);
-}

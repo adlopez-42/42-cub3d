@@ -30,9 +30,9 @@ void	ft_drawcf(t_data *data)
 		while (x <= data->mlx->width_window)
 		{
 			if (y <= horizonte)
-				my_mlx_pixel_put(data, x, y, GRIS);
+				my_mlx_pixel_put(data, x, y, data->asset->cieling_rgb);
 			else
-				my_mlx_pixel_put(data, x, y, BLANCO);
+				my_mlx_pixel_put(data, x, y, data->asset->floor_rgb);
 			x++;
 		}
 		y++;

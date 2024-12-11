@@ -96,27 +96,12 @@ t_asset	*ft_setup_assets(t_checks *checker)
 	return (new);
 }
 
-char	*ft_transform_rgb(int red, int green, int blue)
+int	ft_transform_rgb(int red, int green, int blue)
 {
-	char	*rgb;
+	int	rgb;
 
-	rgb = malloc(sizeof(char) * 8);
-	rgb[0] = '#';
-	rgb[1] = ft_rgb_char(red / 16);
-	rgb[2] = ft_rgb_char(red % 16);
-	rgb[3] = ft_rgb_char(green / 16);
-	rgb[4] = ft_rgb_char(green % 16);
-	rgb[5] = ft_rgb_char(blue / 16);
-	rgb[6] = ft_rgb_char(blue % 16);
-	rgb[7] = '\0';
+	rgb = (red << 16) | (green << 8) | blue;
 	return (rgb);
-}
-
-char	ft_rgb_char(int value)
-{
-	if (value < 10)
-		return ('0' + value);
-	return ('A' + (value - 10));
 }
 
 t_image_info	*ft_setup_texture(char *path, t_mlx *mlx)
