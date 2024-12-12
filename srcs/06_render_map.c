@@ -88,7 +88,7 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float st
 {
 	float x_end = x_start + steps * cos(angle);
 	float y_end = y_start + steps * sin(angle);
-	int	color;
+	int	color = 0;
 	int	i = 0;
 	float t;
 	int x_current;
@@ -106,11 +106,10 @@ void draw_line(t_data *data, float x_start, float y_start, float angle, float st
 			break ;
 	}
 	//dist_wall = (ft_distancia(x_current, y_current, data->playerpos) / cos(90 - angle));
-	color = ft_texture_color(x_current, y_current, data);
-	draw_colum(data, color, ((TILE_SIZE * data->mlx->height_window) / (ft_distancia(x_current, y_current, data->playerpos)) / cos(angle * (PI / 360))));
+	draw_colum(data, color, ((TILE_SIZE * data->mlx->height_window) / (ft_distancia(x_current, y_current, data->playerpos)) / cos(angle * (PI / 360))), x_current, y_current);
 }
 
-int	ft_texture_color(int x, int y, t_data *data)
+int	ft_texture_color(int x, int y, t_data *data, int x_text, int y_text)
 {
 	int	color;
 
@@ -118,35 +117,38 @@ int	ft_texture_color(int x, int y, t_data *data)
 	if (((((x % TILE_SIZE) == 0) || (( x + 1 ) % TILE_SIZE) == 0)) && ((((y % TILE_SIZE) == 0) || (( y + 1 ) % TILE_SIZE) == 0)))
 		color = NEGRO;
 	else if ((y % TILE_SIZE) == 0)
-		color = ft_textures_colors(x, y, data->e_texture);
+		color = ft_textures_colors(x_text, y_text, data->e_texture, data);
 	else if ((x % TILE_SIZE) == 0)
-		color = ft_textures_colors(x, y, data->s_texture);
+		color = ft_textures_colors(x_text, y_text, data->s_texture, data);
 	else if (((x + 1) % (TILE_SIZE)) == 0)
-		color = ft_textures_colors(x, y, data->n_texture);
+		color = ft_textures_colors(x_text, y_text, data->n_texture, data);
 	else if (((y + 1) % (TILE_SIZE)) == 0)
-		color = ft_textures_colors(x, y, data->w_texture);
+		color = ft_textures_colors(x_text, y_text, data->w_texture, data);
 	else
-		color = 0;
+		color = BLANCO;
 	return (color);
 }
 
-int	ft_textures_colors(int x, int y, t_image_info *info)
+int	ft_textures_colors(int x, int y, t_image_info *info, t_data *data)
 {
-	int	tile_x;
-	int	tile_y;
-	int	pixel_pos;
-	int	color;
+    //int texture_x;
+    //int texture_y;
+    int color;
+	(void)data;
+    //int len_x = 500;   // Ancho de la textura
+    //int len_y = 500;  // Alto de la textura
 
-	tile_x = x % 500;
-	//printf("x %i\n", x);
-	tile_y = y % 500;
-	//printf("y %i\n", y);
-	pixel_pos = (tile_y * info->bpp / 8) + (tile_x * (info->bpp / 8));
-	//printf("pixel pos %d\n", pixel_pos);
-	//printf("image charge %p\n", info->image_charge);
-	color = *(int *)(info->image_charge);
-	color += pixel_pos;
-	return (color);
+    // Escalar las coordenadas (x, y) para que estén dentro de los límites de la textura
+    //texture_x = (int)((double)x / (double)data->mlx->width_window * len_x) % len_x;
+    //texture_y = (int)((double)y / (double)data->mlx->height_window * len_y) % len_y;
+
+    // Obtener los datos de la imagen
+    int *pixels = (int *)mlx_get_data_addr(info->image_charge, &info->bpp, &info->line_s, &info->endian);
+
+    // Acceder al color del píxel en las coordenadas calculadas
+    color = pixels[y * x];
+    
+    return color;
 }
 
 int	ft_distancia(int x, int y, t_pos *player)

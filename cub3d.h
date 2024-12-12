@@ -215,9 +215,9 @@ int					ft_rotation(int keycode, t_data *data);
 //08_3d.c
 int					wall_side(int x, int y);
 void				ft_drawcf(t_data *data);
-void				draw_colum(t_data *data, int color, int dist_wall);
+void				draw_colum(t_data *data, int color, int dist_wall, int x_current, int y_current);
 
-int					ft_textures_colors(int x, int y, t_image_info *info);
-int					ft_texture_color(int x, int y, t_data *data);
+int					ft_textures_colors(int x, int y, t_image_info *info, t_data *data);
+int					ft_texture_color(int x, int y, t_data *data, int x_text, int y_text);
 
 #endif

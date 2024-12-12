@@ -70,11 +70,14 @@ void	ft_drawcf(t_data *data)
 // 	x++;
 // }
 
-void draw_colum(t_data *data, int color, int dist_wall)
+void draw_colum(t_data *data, int color, int dist_wall, int x_current, int y_current)
 {
 	static int x = 0;
 	int y;
 	int horizonte;
+	int	texture_color;
+	int	x_text;
+	int	y_text;
 
 	horizonte = data->mlx->height_window / 2;
 	y = 0;
@@ -85,12 +88,15 @@ void draw_colum(t_data *data, int color, int dist_wall)
 
 	int start = horizonte - dist_wall;
 	int end = horizonte + dist_wall;
-
+	(void)color;
 	while (y <= data->mlx->height_window)
 	{
 		if (y >= start && y <= end)
 		{
-			my_mlx_pixel_put(data, x, y, color);
+            y_text = (y - start) * 500 / (end - start);
+			x_text = (int)((float)x_current / (float)data->mlx->width_window * 500) % 500;
+			texture_color = ft_texture_color(x_current, y_current, data, y_text, x_text);
+			my_mlx_pixel_put(data, x, y, texture_color);
 		}
 		y++;
 	}
