@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:46:56 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/11 12:23:09 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:33:26 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void draw_colum(t_data *data, int color, int dist_wall, int x_current, int y_cur
 	{
 		if (y >= start && y <= end)
 		{
-            y_text = (y - start) * 500 / (end - start);
+			y_text = (y - start) * 500 / (end - start);
 			x_text = (int)((float)x_current / (float)data->mlx->width_window * 500) % 500;
 			texture_color = ft_texture_color(x_current, y_current, data, y_text, x_text);
 			my_mlx_pixel_put(data, x, y, texture_color);
@@ -102,5 +102,6 @@ void draw_colum(t_data *data, int color, int dist_wall, int x_current, int y_cur
 	}
 	x++;
 }
+
 
 

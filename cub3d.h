@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/11 13:55:14 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:06:01 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@
 // # define W_HEIGHT 1964
 // # define W_WIDTH 3491
 
-# define WINDOW_RATIO 35
+# define WINDOW_RATIO 81
 
 
 

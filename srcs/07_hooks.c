@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 12:29:39 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/11 13:56:08 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/16 12:02:56 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	ft_hooks(int keycode, t_data *data)
 	}
 	else
 		ft_rotation(keycode, data);
+		
 	return (keycode);
 }
 
@@ -81,7 +82,7 @@ int	ft_hooks(int keycode, t_data *data)
 int	ft_rotation(int keycode, t_data *data)
 {
 	float	angle;
-
+	
 	angle = data->playerpos->dir;
 	if (keycode == RIGHT)
 		angle -= 0.0095;
