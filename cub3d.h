@@ -6,14 +6,12 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/16 12:06:01 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/17 13:58:40 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
-// includes
 
 # include <unistd.h>
 # include <fcntl.h>
@@ -23,8 +21,6 @@
 # include <stdbool.h>
 # include "mlx/mlx.h"
 # include <math.h>
-
-// macros
 
 # define A 97
 # define D 100
@@ -44,7 +40,6 @@
 # define TILE_SIZE 100
 # define PI 3.14159265359
 
-//colors
 # define GRIS 0x808080
 # define BLANCO 0xFFFFFF
 # define NEGRO 0x000000
@@ -54,14 +49,7 @@
 # define VERDE 0x099F1D
 # define AZUL 0X146BD0
 
-// # define W_HEIGHT 1964
-// # define W_WIDTH 3491
-
 # define WINDOW_RATIO 81
-
-
-
-// structs
 
 typedef struct s_image_info
 {
@@ -217,7 +205,8 @@ int					wall_side(int x, int y);
 void				ft_drawcf(t_data *data);
 void				draw_colum(t_data *data, int color, int dist_wall, int x_current, int y_current);
 
-int					ft_textures_colors(int x, int y, t_image_info *info, t_data *data);
+int					ft_textures_colors(int x_text, int y_text, t_image_info *data);
 int					ft_texture_color(int x, int y, t_data *data, int x_text, int y_text);
+int					ft_north_south(int x, int y);
 
 #endif
