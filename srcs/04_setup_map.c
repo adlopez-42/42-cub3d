@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:59:07 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/06 11:58:33 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:36:38 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ t_map	*ft_clean_map(char **checkermap)
 	idx = 0;
 	while (checkermap[idx])
 	{
-
 		newgrid[idx] = ft_strdup(checkermap[idx]);
 		size = ft_strlen(newgrid[idx]);
 		if (size > max)
@@ -35,9 +34,27 @@ t_map	*ft_clean_map(char **checkermap)
 		idx++;
 	}
 	newgrid[idx] = NULL;
-
 	newmap->grid = newgrid;
 	newmap->height = idx;
 	newmap->width = max;
+	return (newmap);
+}
+
+char	**ft_setup_map(char **input)
+{
+	int		map_top;
+	int		map_bot;
+	int		idx;
+	char	**newmap;
+
+	idx = 0;
+	newmap = (char **)malloc(sizeof(char) * 4092);
+	map_top = ft_maptop(input);
+	map_bot = ft_mapbot(input, map_top);
+	if (map_bot == -1 || map_bot == -1)
+		return (NULL);
+	while (map_top != map_bot)
+		newmap[idx++] = ft_strdup(input[map_top++]);
+	newmap[idx] = '\0';
 	return (newmap);
 }

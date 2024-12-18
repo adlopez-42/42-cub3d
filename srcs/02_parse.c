@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:30:20 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/29 13:14:15 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:42:08 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	ft_parse(t_checks *checker)
 
 int	ft_voids_checks(t_checks *checker)
 {
-	if (!checker->north_texture || !checker->south_texture || !checker->west_texture\
-		|| !checker->east_texture || !checker->map[0])
+	if (!checker->north_texture || !checker->south_texture || \
+		!checker->west_texture || !checker->east_texture || !checker->map[0])
 		return (0);
 	if (checker->c_blue == -1 || checker->c_green == -1 || checker->c_red == -1)
 		return (0);
@@ -58,7 +58,7 @@ int	ft_rgb_checks(t_checks *checker)
 		return (0);
 	if (checker->c_green > 255 || checker->c_green < 0)
 		return (0);
-	if (checker->c_red > 255 || checker->c_red< 0)
+	if (checker->c_red > 255 || checker->c_red < 0)
 		return (0);
 	if (checker->f_blue > 255 || checker->f_blue < 0)
 		return (0);
@@ -82,9 +82,11 @@ int	ft_map_checks(t_checks *checker)
 	{
 		while (checker->map[idx][idy])
 		{
-			if (checker->map[idx][idy] == 'N' || checker->map[idx][idy] == 'S' || \
-				checker->map[idx][idy] == 'W' || checker->map[idx][idy] == 'E')
+			if (checker->map[idx][idy] == 'N' || checker->map[idx][idy] == 'S' \
+			|| checker->map[idx][idy] == 'W' || checker->map[idx][idy] == 'E')
+			{
 				players++;
+			}
 			idy++;
 		}
 		idy = 0;

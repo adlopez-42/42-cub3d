@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/17 13:58:40 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:48:09 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ typedef struct s_data
 	t_image_info	*e_texture;
 }					t_data;
 
-
 typedef struct s_checks
 {
 	char			*north_texture;
@@ -129,24 +128,31 @@ typedef struct s_checks
 }					t_checks;
 
 // functions
-int				load_image(void *patata);
-//utils
-//static int			count_words(const char *str, char c);
-//static char			*word_dup(const char *str, int start, int finish);
-char				**ft_split(char const *s, char c);
-int					ft_strlen(const char *s);
-char				*ft_strdup(char *str);
+int					load_image(void *patata);
+char				*ft_clean_path(char *oldpath);
+void				ft_textures_mlxinit(t_data **data);
+void				ft_cub3d(t_data *data);
+
+//00_utils.c
+int					count_words(const char *str, char c);
+char				*word_dup(const char *str, int start, int finish);
 int					ft_maptop(char **input);
 int					ft_mapbot(char **input, int start);
 int					ft_mapline(char *line);
+
+//01_utils_libft.c
+char				**ft_split(char const *s, char c);
+int					ft_strlen(const char *s);
+char				*ft_strdup(char *str);
+int					ft_strncmp(const char *str, const char *str2, size_t c);
+float				ft_posdir(char **map);
+
+//02_utils_textures.c
 int					ft_rgb_pos(char **input, int flag);
 int					ft_rgbreturn(char *input, int flag);
 int					ft_rgbreturn_2(char *input);
-int					ft_strncmp(const char *str, const char *str2, size_t c);
 int					ft_texture_format(char *texture);
 int					ft_repeated_textures(t_checks *checker);
-float				ft_posdir(char **map);
-
 
 //00_error.c
 void				ft_error(int id);
@@ -156,14 +162,13 @@ int					ft_cub(char *argv);
 //0x_freedom.c
 void				ft_free_split(char **data);
 void				ft_free_checker(t_checks *checker);
-void				ft_free_data(t_data *data);
 void				ft_free_semichecker(t_checks *checker);
+void				ft_free_data(t_data *data);
 
 //01_setup_checker.c
-t_checks	*		ft_setup_checker(int fd);
+t_checks			*ft_setup_checker(int fd);
 void				ft_setup_rgbs(t_checks **checker, char **input);
 int					ft_rgbdata(char **input, int flag, int flag_d);
-char				**ft_setup_map(char **input);
 char				*ft_texture_data(char **input, int flag);
 
 //02_parse
@@ -179,34 +184,37 @@ t_pos				*ft_playerpos(char **map);
 t_mlx				*ft_mlx_init(t_map *map);
 t_asset				*ft_setup_assets(t_checks *checker);
 t_image_info		*ft_setup_texture(char *path, t_mlx *mlx);
-int					ft_transform_rgb(int red, int green, int blue);
 
 //04_setup_map.c
 t_map				*ft_clean_map(char **checkermap);
+char				**ft_setup_map(char **input);
 
-//05_izaromamicosas.c
+//05_utils_function.c
 int					ft_close(int keycode, t_data *data);
-
-//06_render_map.c
 void				my_mlx_pixel_put(t_data *data, int x, int y, int color);
-void				draw_square(t_data *data, char c, int d_x, int d_y);
-void				calculate_fov(t_data *data);
+int					ft_distancia(int x, int y, t_pos *player);
 void				draw_player(t_data *data);
 void				prepare_rays(t_data *data, float desf, int lenght);
+
+//06_render_map.c
+void				draw_square(t_data *data, char c, int d_x, int d_y);
+void				calculate_fov(t_data *data);
 void				draw_line(t_data *data, float x_start, float y_start, float angle, float steps);
-int					ft_distancia(int x, int y, t_pos *player);
+void				ft_drawcf(t_data *data);
 
 //07_hooks.c
 int					ft_hooks( int keycode, t_data *data);
 int					ft_rotation(int keycode, t_data *data);
 
 //08_3d.c
-int					wall_side(int x, int y);
-void				ft_drawcf(t_data *data);
-void				draw_colum(t_data *data, int color, int dist_wall, int x_current, int y_current);
-
-int					ft_textures_colors(int x_text, int y_text, t_image_info *data);
-int					ft_texture_color(int x, int y, t_data *data, int x_text, int y_text);
+void				draw_colum(t_data *data, int dist_wall, int x_current, \
+						int y_current);
 int					ft_north_south(int x, int y);
+
+//09_textures.c
+int					ft_texture_color(int x, int y, t_data *data, int x_text, int y_text);
+int					ft_textures_colors(int x_text, int y_text, \
+						t_image_info *data);
+int					ft_transform_rgb(int red, int green, int blue);
 
 #endif

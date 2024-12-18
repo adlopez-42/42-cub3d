@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   05_IZAROMAMICOSAS.c                                :+:      :+:    :+:   */
+/*   05_utils_function.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 19:30:37 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/29 13:16:01 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:42:48 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,63 @@ int	ft_close(int keycode, t_data *data)
 		exit (0);
 	}
 	return (keycode);
+}
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	if ((x < 0 || x > data->mlx->width_window) \
+	|| (y < 0 || y > data->mlx->height_window))
+		return ;
+	dst = data->mlx->img_addr + (y * data->mlx->size_line) \
+	+ (x * (data->mlx->bit_per_pixel / 8));
+	*(unsigned int *) dst = color;
+}
+
+int	ft_distancia(int x, int y, t_pos *player)
+{
+	int	num;
+	int	num2;
+
+	num = (x - (player->x * TILE_SIZE)) * (x - (player->x * TILE_SIZE));
+	num2 = (y - (player->y * TILE_SIZE)) * (y - (player->y * TILE_SIZE));
+	return (sqrt(num + num2));
+}
+
+void	draw_player(t_data *data)
+{
+	int	x;
+	int	y;
+	int	p_x;
+	int	p_y;
+
+	p_x = data->playerpos->x * TILE_SIZE;
+	p_y = data->playerpos->y * TILE_SIZE;
+	y = 0;
+	while (y < data->mlx->height_window)
+	{
+		x = 0;
+		while (x < data->mlx->width_window)
+		{
+			if (sqrt((x - p_y) * (x - p_y) + (y - p_x) * (y - p_x)) <= 10)
+			{
+				my_mlx_pixel_put(data, x, y, ROJO);
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	prepare_rays(t_data *data, float desf, int lenght)
+{
+	float	pos_x;
+	float	pos_y;
+	float	angle;
+
+	pos_x = data->playerpos->x * TILE_SIZE;
+	pos_y = data->playerpos->y * TILE_SIZE;
+	angle = data->playerpos->dir + desf;
+	draw_line(data, pos_x, pos_y, angle, lenght);
 }

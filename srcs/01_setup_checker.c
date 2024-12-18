@@ -6,13 +6,13 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:31:13 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/06 12:37:12 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:38:52 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-t_checks	*ft_setup_checker(int fd)
+static void	ft_setup_checket_aux(int fd)
 {
 	t_checks	*newchecker;
 	char		buff[4092];
@@ -26,10 +26,22 @@ t_checks	*ft_setup_checker(int fd)
 	newchecker->south_texture = ft_texture_data(input, 1);
 	newchecker->west_texture = ft_texture_data(input, 2);
 	newchecker->east_texture = ft_texture_data(input, 3);
+}
+
+t_checks	*ft_setup_checker(int fd)
+{
+	t_checks	*newchecker;
+	char		buff[4092];
+	char		**input;
+
+	ft_setup_checket_aux(fd);
 	ft_setup_rgbs(&newchecker, input);
-	if (newchecker->c_red && newchecker->f_green && newchecker->north_texture && \
-		newchecker->south_texture && newchecker->west_texture && newchecker->east_texture)
+	if (newchecker->c_red && newchecker->f_green && newchecker->north_texture \
+		&& newchecker->south_texture && newchecker->west_texture && \
+		newchecker->east_texture)
+	{
 		newchecker->map = ft_setup_map(input);
+	}
 	else
 	{
 		ft_free_split(input);
@@ -38,10 +50,6 @@ t_checks	*ft_setup_checker(int fd)
 	}
 	ft_free_split(input);
 	return (newchecker);
-	// newchecker->map = ft_setup_map(input);
-	// ft_setup_rgbs(&newchecker, input);
-	// ft_free_split(input);
-	// return (newchecker);
 }
 
 void	ft_setup_rgbs(t_checks **checker, char **input)
@@ -75,25 +83,6 @@ int	ft_rgbdata(char **input, int flag, int flag_d)
 	if (flag_d == 1 && flag == 2)
 		return (ft_rgbreturn_2(input[floor_id]));
 	return (0);
-}
-
-char	**ft_setup_map(char **input)
-{
-	int		map_top;
-	int		map_bot;
-	int		idx;
-	char	**newmap;
-
-	idx = 0;
-	newmap = (char **)malloc(sizeof(char) * 4092);
-	map_top = ft_maptop(input);
-	map_bot = ft_mapbot(input, map_top);
-	if (map_bot == -1 || map_bot == -1)
-		return (NULL);
-	while (map_top != map_bot)
-		newmap[idx++] = ft_strdup(input[map_top++]);
-	newmap[idx] = '\0';
-	return (newmap);
 }
 
 char	*ft_texture_data(char **input, int flag)
