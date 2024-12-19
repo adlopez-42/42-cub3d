@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/19 12:09:19 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 12:43:14 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	calculate_fov(t_data *data)
 
 	i = 0;
 	start_des = 35 * (PI / 180.0) + (PI / 2);
-	end_des = -35 * (PI / 180.0) + (PI / 2);
 	j = (start_des - end_des) / data->mlx->width_window;
+	end_des = -35 * (PI / 180.0) + (PI / 2);
 	while (start_des >= end_des)
 	{
 		prepare_rays(data, start_des, 3000);

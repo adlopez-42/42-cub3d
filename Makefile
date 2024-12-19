@@ -8,7 +8,7 @@
 
 NAME = cub3d
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
 MLXFLAGS = -L$(MLX_DIR) -lm -lmlx -lX11 -lXext
 
 MLX_DIR = mlx

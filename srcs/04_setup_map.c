@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:59:07 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/18 12:36:38 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 12:32:09 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,20 @@ char	**ft_setup_map(char **input)
 		newmap[idx++] = ft_strdup(input[map_top++]);
 	newmap[idx] = '\0';
 	return (newmap);
+}
+
+t_ray	*ft_ray_init(t_ray *ray)
+{
+	t_ray	*new;
+
+	(void)ray;
+	new = malloc(sizeof(t_ray));
+	new->color = 0;
+	new->x_text = 0;
+	new->y_text = 0;
+	new->dist_wall = 0;
+	new->x_current = 0;
+	new->y_current = 0;
+	new->angle = 0.0;
+	return (new);
 }

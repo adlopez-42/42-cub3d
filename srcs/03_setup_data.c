@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 18:55:28 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/19 11:57:53 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 12:39:54 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_data	*ft_setup_data(t_checks *checker)
 	voidata->asset = ft_setup_assets(checker);
 	voidata->playerpos = ft_playerpos(checker->map);
 	voidata->mlx = ft_mlx_init(voidata->map);
+	voidata->ray = ft_ray_init(voidata->ray);
 	return (voidata);
 }
 

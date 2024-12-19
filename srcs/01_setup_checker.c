@@ -6,13 +6,20 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:31:13 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/19 12:08:30 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 12:23:52 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static void	ft_setup_checket_aux(int fd)
+static void	ft_setup_checker_aux(char **input, t_checks *newchecker)
+{
+	ft_free_split(input);
+	ft_free_semichecker(newchecker);
+	return ;
+}
+
+t_checks	*ft_setup_checker(int fd)
 {
 	t_checks	*newchecker;
 	char		buff[4092];
@@ -20,21 +27,12 @@ static void	ft_setup_checket_aux(int fd)
 
 	newchecker = (t_checks *)malloc(sizeof(t_checks));
 	if (!read(fd, buff, 4092))
-		return ;
+		return (NULL);
 	input = ft_split(buff, '\n');
 	newchecker->north_texture = ft_texture_data(input, 0);
 	newchecker->south_texture = ft_texture_data(input, 1);
 	newchecker->west_texture = ft_texture_data(input, 2);
 	newchecker->east_texture = ft_texture_data(input, 3);
-}
-
-t_checks	*ft_setup_checker(int fd)
-{
-	t_checks	*newchecker;
-	char		**input;
-
-	input = NULL;
-	ft_setup_checket_aux(fd);
 	ft_setup_rgbs(&newchecker, input);
 	if (newchecker->c_red && newchecker->f_green && newchecker->north_texture \
 		&& newchecker->south_texture && newchecker->west_texture && \
@@ -43,11 +41,7 @@ t_checks	*ft_setup_checker(int fd)
 		newchecker->map = ft_setup_map(input);
 	}
 	else
-	{
-		ft_free_split(input);
-		ft_free_semichecker(newchecker);
-		return (NULL);
-	}
+		ft_setup_checker_aux(input, newchecker);
 	ft_free_split(input);
 	return (newchecker);
 }

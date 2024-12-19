@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/19 11:54:48 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 12:43:57 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,7 @@ t_image_info		*ft_setup_texture(char *path, t_mlx *mlx);
 //04_setup_map.c
 t_map				*ft_clean_map(char **checkermap);
 char				**ft_setup_map(char **input);
+t_ray				*ft_ray_init(t_ray *ray);
 
 //05_utils_function.c
 int					ft_close(int keycode, t_data *data);
