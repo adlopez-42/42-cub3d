@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:20:59 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/18 12:48:09 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 11:54:48 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@
 # define AZUL 0X146BD0
 
 # define WINDOW_RATIO 81
+
+typedef struct s_ray
+{
+	int		color;
+	int		x_text;
+	int		y_text;
+	int		dist_wall;
+	int		x_current;
+	int		y_current;
+	float	angle;
+}				t_ray;
 
 typedef struct s_image_info
 {
@@ -108,6 +119,7 @@ typedef struct s_data
 	t_image_info	*s_texture;
 	t_image_info	*w_texture;
 	t_image_info	*e_texture;
+	t_ray			*ray;
 }					t_data;
 
 typedef struct s_checks
@@ -199,20 +211,20 @@ void				prepare_rays(t_data *data, float desf, int lenght);
 //06_render_map.c
 void				draw_square(t_data *data, char c, int d_x, int d_y);
 void				calculate_fov(t_data *data);
-void				draw_line(t_data *data, float x_start, float y_start, float angle, float steps);
-void				ft_drawcf(t_data *data);
+void				draw_line(t_data *data, float x_start, float y_start,
+						float steps);
 
 //07_hooks.c
 int					ft_hooks( int keycode, t_data *data);
 int					ft_rotation(int keycode, t_data *data);
 
 //08_3d.c
-void				draw_colum(t_data *data, int dist_wall, int x_current, \
-						int y_current);
 int					ft_north_south(int x, int y);
+void				draw_colum(t_data *data);
+void				ft_drawcf(t_data *data);
 
 //09_textures.c
-int					ft_texture_color(int x, int y, t_data *data, int x_text, int y_text);
+int					ft_texture_color(t_data *data);
 int					ft_textures_colors(int x_text, int y_text, \
 						t_image_info *data);
 int					ft_transform_rgb(int red, int green, int blue);

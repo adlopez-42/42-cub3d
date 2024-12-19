@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:26:54 by adrian            #+#    #+#             */
-/*   Updated: 2024/11/29 13:10:02 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 11:11:09 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_interror(int id)
 
 int	ft_cub(char *argv)
 {
-	int idx;
+	int	idx;
 
 	idx = 0;
 	if (!argv)
@@ -44,8 +44,11 @@ int	ft_cub(char *argv)
 		if (argv[idx] == '.')
 		{
 			if (argv[idx + 1] && argv[idx + 1] == 'c' && argv[idx + 2] \
-				&& argv[idx + 2] == 'u' && argv[idx + 3] && argv[idx + 3] == 'b')
+				&& argv[idx + 2] == 'u' && argv[idx + 3] \
+				&& argv[idx + 3] == 'b')
+			{
 				return (1);
+			}
 		}
 		idx++;
 	}

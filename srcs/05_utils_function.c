@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 19:30:37 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/18 12:42:48 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 11:42:05 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,9 @@ void	prepare_rays(t_data *data, float desf, int lenght)
 {
 	float	pos_x;
 	float	pos_y;
-	float	angle;
 
 	pos_x = data->playerpos->x * TILE_SIZE;
 	pos_y = data->playerpos->y * TILE_SIZE;
-	angle = data->playerpos->dir + desf;
-	draw_line(data, pos_x, pos_y, angle, lenght);
+	data->ray->angle = data->playerpos->dir + desf;
+	draw_line(data, pos_x, pos_y, lenght);
 }

@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 14:31:51 by adrian            #+#    #+#             */
-/*   Updated: 2024/12/06 11:33:32 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 11:11:16 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_free_split(char **data)
 {
-	int idx;
+	int	idx;
 
 	idx = 0;
 	while (data[idx])

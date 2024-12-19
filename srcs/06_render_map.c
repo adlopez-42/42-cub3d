@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/18 12:31:25 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 12:09:19 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ static void	draw_square_utils(t_data *data, int d_x, int d_y, int color)
 
 void	draw_square(t_data *data, char c, int d_x, int d_y)
 {
-	int	x;
-	int	y;
 	int	color;
 
 	if (c == '1')
@@ -60,9 +58,9 @@ void	calculate_fov(t_data *data)
 	float	j;
 
 	i = 0;
-	j = (start_des - end_des) / data->mlx->width_window;
 	start_des = 35 * (PI / 180.0) + (PI / 2);
 	end_des = -35 * (PI / 180.0) + (PI / 2);
+	j = (start_des - end_des) / data->mlx->width_window;
 	while (start_des >= end_des)
 	{
 		prepare_rays(data, start_des, 3000);
@@ -73,52 +71,41 @@ void	calculate_fov(t_data *data)
 		data->mlx->img, 0, 0);
 }
 
-void	draw_line(t_data *data, float x_start, float y_start, float angle, float steps)
+static void	draw_line_aux(t_data *data)
 {
-	float x_end = x_start + steps * cos(angle);
-	float y_end = y_start + steps * sin(angle);
-	int	color = 0;
-	int	i = 0;
-	float t;
-	int x_current;
-	int y_current;
+	if (((ft_distancia(data->ray->x_current, data->ray->y_current, \
+			data->playerpos)) / cos(data->ray->angle * (PI / 360))) == 0)
+		return ;
+	data->ray->dist_wall = ((TILE_SIZE * data->mlx->height_window)
+			/ (ft_distancia(data->ray->x_current, data->ray->y_current,
+					data->playerpos)) / cos(data->ray->angle * (PI / 360))) / 2;
+	draw_colum(data);
+}
 
-	x_current = 0;
-	y_current = 0;
+void	draw_line(t_data *data, float x_start, float y_start, float steps)
+{
+	float	x_end;
+	float	y_end;
+	int		i;
+	float	t;
+
+	i = 0;
+	x_end = x_start + steps * cos(data->ray->angle);
+	y_end = y_start + steps * sin(data->ray->angle);
 	while (i++ < steps)
 	{
 		t = (float)i / (float)steps;
-		x_current = (int)(x_start + t * (x_end - x_start));
-		y_current = (int)(y_start + t * (y_end - y_start));
-		if (x_current < 0 || x_current >= (data->map->width * TILE_SIZE) || y_current < 0 || y_current >= (data->map->width * TILE_SIZE))
+		data->ray->x_current = (int)(x_start + t * (x_end - x_start));
+		data->ray->y_current = (int)(y_start + t * (y_end - y_start));
+		if (data->ray->x_current < 0 || data->ray->x_current >= \
+			(data->map->width * TILE_SIZE) || data->ray->y_current < 0
+			|| data->ray->y_current >= (data->map->width * TILE_SIZE))
 			break ;
-		if (data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] && data->map->grid[(int)(x_current / TILE_SIZE)][(int)(y_current / TILE_SIZE)] == '1')
+		if (data->map->grid[(int)(data->ray->x_current / TILE_SIZE)]
+			[(int)(data->ray->y_current / TILE_SIZE)] && data->map->grid
+			[(int)(data->ray->x_current / TILE_SIZE)][(int)(data->ray->y_current
+			/ TILE_SIZE)] == '1')
 			break ;
 	}
-	if (((ft_distancia(x_current, y_current, data->playerpos)) / cos(angle * (PI / 360))) == 0)
-		return ;
-	draw_colum(data, color, ((TILE_SIZE * data->mlx->height_window) / (ft_distancia(x_current, y_current, data->playerpos)) / cos(angle * (PI / 360))), x_current, y_current);
-}
-
-void	ft_drawcf(t_data *data)
-{
-	int	x;
-	int	y;
-	int	horizonte;
-
-	horizonte = data->mlx->height_window / 2;
-	y = 0;
-	while (y <= data->mlx->height_window)
-	{
-		x = 0;
-		while (x <= data->mlx->width_window)
-		{
-			if (y <= horizonte)
-				my_mlx_pixel_put(data, x, y, data->asset->cieling_rgb);
-			else
-				my_mlx_pixel_put(data, x, y, data->asset->floor_rgb);
-			x++;
-		}
-		y++;
-	}
+	draw_line_aux(data);
 }

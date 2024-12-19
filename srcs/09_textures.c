@@ -6,17 +6,25 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 12:03:09 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/18 12:45:11 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 11:54:44 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-int	ft_texture_color(int x, int y, t_data *data, int x_text, int y_text)
+int	ft_texture_color(t_data *data)
 {
 	int	color;
+	int	x;
+	int	y;
+	int	x_text;
+	int	y_text;
 
 	color = BLANCO;
+	x = data->ray->x_current;
+	y = data->ray->y_current;
+	x_text = data->ray->x_text;
+	y_text = data->ray->y_text;
 	if ((x % TILE_SIZE == 0 || (x + 1) % TILE_SIZE == 0) \
 		&& (y % TILE_SIZE == 0 || (y + 1) % TILE_SIZE == 0))
 		color = NEGRO;

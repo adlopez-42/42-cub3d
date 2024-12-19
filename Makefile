@@ -15,6 +15,8 @@ MLX_DIR = mlx
 MLX_LIB = $(MLX_DIR)/libmlx.a
 
 SRCS = main.c \
+		srcs/00_error.c \
+		srcs/0x_freedom.c \
 		srcs/01_setup_checker.c \
 		srcs/02_parse.c \
 		srcs/03_setup_data.c \
@@ -23,7 +25,10 @@ SRCS = main.c \
 		srcs/06_render_map.c \
 		srcs/07_hooks.c \
 		srcs/08_3d.c \
-		utils/00_utiles_todo.c
+		srcs/09_textures.c \
+		utils/00_utils.c \
+		utils/01_utils_libft.c \
+		utils/02_utils_textures.c
 
 OBJS = $(SRCS:.c=.o)
 

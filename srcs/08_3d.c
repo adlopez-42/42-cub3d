@@ -6,44 +6,73 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:46:56 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/18 12:44:00 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 12:09:39 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void draw_colum(t_data *data, int dist_wall, int x_current, int y_current)
+static void	draw_colum_aux(t_data *data, int x, int y)
 {
-	static int x = 0;
-	int	y;
-	int	horizonte;
-	int	texture_color;
-	int	x_text;
-	int	y_text;
+	int	flag;
+	int	local_coord;
+	int	start;
+	int	end;
 
-	horizonte = data->mlx->height_window / 2;
+	start = (data->mlx->height_window / 2) - data->ray->dist_wall;
+	end = (data->mlx->height_window / 2) + data->ray->dist_wall;
+	if (y >= start && y <= end)
+	{
+		data->ray->y_text = (y - start) * 500 / (end - start);
+		flag = ft_north_south(data->ray->x_current, data->ray->y_current);
+		if (flag)
+			local_coord = data->ray->y_current % TILE_SIZE;
+		else
+			local_coord = data->ray->x_current % TILE_SIZE;
+		data->ray->x_text = local_coord * 500 / TILE_SIZE;
+		data->ray->color = ft_texture_color(data);
+		my_mlx_pixel_put(data, x, y, data->ray->color);
+	}
+}
+
+void	draw_colum(t_data *data)
+{
+	static int	x;
+	int			y;
+
+	x = 0;
 	y = 0;
-
 	if (x == data->mlx->width_window)
 		x = 0;
-	int start = horizonte - dist_wall;
-	int end = horizonte + dist_wall;
-	(void)y_current;
-
 	while (y <= data->mlx->height_window)
 	{
-		if (y >= start && y <= end)
-		{
-			y_text = (y - start) * 500 / (end - start);
-			int flag = ft_north_south(x_current, y_current);
-			int local_coord = (flag ? y_current : x_current) % TILE_SIZE;
-			x_text = local_coord * 500 / TILE_SIZE;
-			texture_color = ft_texture_color(x_current, y_current, data, x_text, y_text);
-			my_mlx_pixel_put(data, x, y, texture_color);
-		}
+		draw_colum_aux(data, x, y);
 		y++;
 	}
 	x++;
+}
+
+void	ft_drawcf(t_data *data)
+{
+	int	x;
+	int	y;
+	int	horizonte;
+
+	horizonte = data->mlx->height_window / 2;
+	y = 0;
+	while (y <= data->mlx->height_window)
+	{
+		x = 0;
+		while (x <= data->mlx->width_window)
+		{
+			if (y <= horizonte)
+				my_mlx_pixel_put(data, x, y, data->asset->cieling_rgb);
+			else
+				my_mlx_pixel_put(data, x, y, data->asset->floor_rgb);
+			x++;
+		}
+		y++;
+	}
 }
 
 int	ft_north_south(int x, int y)
