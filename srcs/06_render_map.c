@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/27 10:49:19 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/19 12:43:14 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 13:22:41 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	calculate_fov(t_data *data)
 
 	i = 0;
 	start_des = 35 * (PI / 180.0) + (PI / 2);
-	j = (start_des - end_des) / data->mlx->width_window;
 	end_des = -35 * (PI / 180.0) + (PI / 2);
+	j = (start_des - end_des) / data->mlx->width_window;
 	while (start_des >= end_des)
 	{
 		prepare_rays(data, start_des, 3000);
@@ -79,7 +79,6 @@ static void	draw_line_aux(t_data *data)
 	data->ray->dist_wall = ((TILE_SIZE * data->mlx->height_window)
 			/ (ft_distancia(data->ray->x_current, data->ray->y_current,
 					data->playerpos)) / cos(data->ray->angle * (PI / 360))) / 2;
-	draw_colum(data);
 }
 
 void	draw_line(t_data *data, float x_start, float y_start, float steps)
@@ -108,4 +107,5 @@ void	draw_line(t_data *data, float x_start, float y_start, float steps)
 			break ;
 	}
 	draw_line_aux(data);
+	draw_colum(data);
 }

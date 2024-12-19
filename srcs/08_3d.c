@@ -6,7 +6,7 @@
 /*   By: izperez <izperez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 13:46:56 by izperez           #+#    #+#             */
-/*   Updated: 2024/12/19 12:43:43 by izperez          ###   ########.fr       */
+/*   Updated: 2024/12/19 13:24:54 by izperez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void	draw_colum_aux(t_data *data, int x, int y)
 			local_coord = data->ray->x_current % TILE_SIZE;
 		data->ray->x_text = local_coord * 500 / TILE_SIZE;
 		data->ray->color = ft_texture_color(data);
+		 printf("x: %d, y: %d, x_text: %d, y_text: %d, color: %d\n", x, y, data->ray->x_text, data->ray->y_text, data->ray->color);
 		my_mlx_pixel_put(data, x, y, data->ray->color);
 	}
 }
